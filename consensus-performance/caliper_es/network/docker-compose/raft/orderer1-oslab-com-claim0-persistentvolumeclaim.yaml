@@ -1,0 +1,29 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: orderer1-oslab-com-pv0
+  labels:
+    type: local
+    name: orderer1-oslab-com-volume0
+spec:
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/home/oslab/go/src/github.com/consensus-performance/caliper_es/network/config/raft/"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: orderer1-oslab-com-claim0
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+  selector:
+    matchLabels:
+      name: orderer1-oslab-com-volume0

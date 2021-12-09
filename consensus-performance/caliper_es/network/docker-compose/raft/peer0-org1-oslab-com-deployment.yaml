@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: peer0-org1-oslab-com
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: peer0-org1-oslab-com
+  template:
+    metadata:
+      labels:
+        name: peer0-org1-oslab-com
+    spec:
+      containers:
+        - args:
+            - peer
+            - node
+            - start
+          env:
+            - name: CORE_PEER_ADDRESSAUTODETECT
+              value: "true"
+            - name: CORE_PEER_NETWORKID
+              value: nid1 
+            - name: CORE_CHAINCODE_EXECUTETIMEOUT
+              value: "999999"
+            - name: CORE_CHAINCODE_LOGGING_LEVEL
+              value: ERROR
+            - name: CORE_CHAINCODE_LOGGING_SHIM
+              value: ERROR
+            - name: CORE_PEER_ADDRESS
+              value: peer0.org1.oslab.com:7051
+            - name: CORE_PEER_ENDORSER_ENABLED
+              value: "true"
+            - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+              value: peer0.org1.oslab.com:7051
+            - name: CORE_PEER_GOSSIP_ORGLEADER
+              value: "false"
+            - name: CORE_PEER_GOSSIP_USELEADERELECTION
+              value: "true"
+            - name: CORE_PEER_ID
+              value: peer0.org1.oslab.com
+            - name: CORE_PEER_LOCALMSPID
+              value: Org1MSP
+            - name: CORE_PEER_MSPCONFIGPATH
+              value: /etc/hyperledger/msp/peer/msp/
+            - name: CORE_PEER_TLS_CERT_FILE
+              value: /etc/hyperledger/msp/peer/tls/server.crt
+            - name: CORE_PEER_TLS_ENABLED
+              value: "true"
+            - name: CORE_PEER_TLS_KEY_FILE
+              value: /etc/hyperledger/msp/peer/tls/server.key
+            - name: CORE_PEER_TLS_ROOTCERT_FILE
+              value: /etc/hyperledger/msp/peer/tls/ca.crt
+            - name: CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE
+              value: raft_peer
+            - name: CORE_VM_ENDPOINT
+              value: unix:///host/var/run/docker.sock
+            - name: FABRIC_LOGGING_SPEC
+              value: error:error
+          image: hyperledger/fabric-peer:1.4.4
+          name: peer0-org1-oslab-com
+          ports:
+            - containerPort: 7051
+          volumeMounts:
+            - mountPath: /host/var/run/
+              name: peer0-org1-oslab-com-claim0
+            - mountPath: /etc/hyperledger/msp/peer
+              name: peer0-org1-oslab-com-claim1
+          workingDir: /opt/gopath/src/github.com/hyperledger/fabric
+      restartPolicy: Always
+      volumes:
+        - name: peer0-org1-oslab-com-claim0
+          persistentVolumeClaim:
+            claimName: peer0-org1-oslab-com-claim0
+        - name: peer0-org1-oslab-com-claim1
+          persistentVolumeClaim:
+            claimName: peer0-org1-oslab-com-claim1

@@ -1,0 +1,252 @@
+Benchmark for target Blockchain type fabric about to start
+2021.10.18-16:38:35.411[32m info [39m [caliper] [benchmark-validator] 	No observer specified, will default to `none`
+2021.10.18-16:38:35.413[32m info [39m [caliper] [caliper-flow] 	####### Caliper Test #######
+2021.10.18-16:38:35.416[32m info [39m [caliper] [null-observer] 	Configured observer
+2021.10.18-16:38:35.419[32m info [39m [caliper] [caliper-utils] 	Executing command: cd /home/oslab/go/src/github.com/consensus-performance/caliper_es;export FABRIC_VERSION=1.4.4; sleep 2s
+2021.10.18-16:38:37.436[32m info [39m [caliper] [adapters/fabric] 	Fabric SDK version: 1.4.14; TLS: server
+2021.10.18-16:38:38.184[32m info [39m [caliper] [adapters/fabric] 	Org1's registrar enrolled successfully
+2021.10.18-16:38:38.504[32m info [39m [caliper] [adapters/fabric] 	Org2's registrar enrolled successfully
+2021.10.18-16:38:38.538[32m info [39m [caliper] [adapters/fabric] 	Org1's admin's materials are successfully loaded
+2021.10.18-16:38:38.597[32m info [39m [caliper] [adapters/fabric] 	Org2's admin's materials are successfully loaded
+2021.10.18-16:38:38.625[32m info [39m [caliper] [adapters/fabric] 	client0's materials are successfully loaded
+2021.10.18-16:38:38.654[32m info [39m [caliper] [adapters/fabric] 	client1's materials are successfully loaded
+2021.10.18-16:38:38.655[32m info [39m [caliper] [adapters/fabric] 	Channel 'oslab' definiton being retrieved from file
+2021.10.18-16:38:38.744[32m info [39m [caliper] [adapters/fabric] 	Channel 'oslab' successfully created
+2021.10.18-16:38:38.745[32m info [39m [caliper] [adapters/fabric] 	Sleeping 5s...
+2021.10.18-16:38:43.857[32m info [39m [caliper] [adapters/fabric] 	Org1's peers successfully joined oslab: peer0,peer1
+2021.10.18-16:38:43.933[32m info [39m [caliper] [adapters/fabric] 	Org2's peers successfully joined oslab: peer2,peer3
+2021.10.18-16:38:43.934[32m info [39m [caliper] [adapters/fabric] 	Sleeping 5s...
+2021.10.18-16:38:48.935[32m info [39m [caliper] [adapters/fabric] 	Installing chaincodes for oslab...
+2021.10.18-16:38:49.012[32m info [39m [caliper] [adapters/fabric] 	smallbank@v0 successfully installed on Org1's peers: peer0,peer1
+2021.10.18-16:38:49.031[32m info [39m [caliper] [adapters/fabric] 	smallbank@v0 successfully installed on Org2's peers: peer2,peer3
+2021.10.18-16:38:49.033[32m info [39m [caliper] [adapters/fabric] 	Instantiating smallbank@v0 in oslab. This might take some time...
+2021.10.18-16:39:09.479[32m info [39m [caliper] [adapters/fabric] 	Successfully instantiated smallbank@v0 in oslab
+2021.10.18-16:39:09.481[32m info [39m [caliper] [adapters/fabric] 	Sleeping 5s...
+2021.10.18-16:39:16.583[32m info [39m [caliper] [caliper-flow] 	Started monitors successfully
+2021.10.18-16:39:16.584[32m info [39m [caliper] [defaultTest] 	####### Testing 'smallOperations' #######
+2021.10.18-16:39:16.586[32m info [39m [caliper] [defaultTest] 	------ Test round 1 ------
+2021.10.18-16:39:16.596[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.602[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.610[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.616[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.622[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.629[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.636[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.642[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.649[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.657[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.666[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.671[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.676[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.681[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.690[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.699[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.707[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.712[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.718[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.726[32m info [39m [caliper] [client.js] 	Launching client with PID 
+2021.10.18-16:39:16.727[32m info [39m [caliper] [client.js] 	Waiting for 20 clients to be ready... 
+2021.10.18-16:39:18.293[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.292[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.324[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.324[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.327[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.327[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.349[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.349[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.374[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.374[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.383[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.383[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.383[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.383[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.387[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.388[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.400[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.399[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.401[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.401[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.403[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.403[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.415[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.415[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.417[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.417[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.419[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.419[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.423[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.423[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.424[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.424[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.424[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.425[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.428[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.428[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.428[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.428[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.521[32m info [39m [caliper] [client.js] 	Client ready message received
+2021.10.18-16:39:18.521[32m info [39m [caliper] [client.js] 	20 clients ready, starting test phase
+2021.10.18-16:39:18.521[32m info [39m [caliper] [fabric/fabricClientWorker] 	Client ready
+2021.10.18-16:39:18.524[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.524[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.524[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.524[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.524[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.525[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.525[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.525[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.525[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.525[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.525[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.525[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.525[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.525[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.525[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.525[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.525[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.525[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.525[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.525[32m info [39m [caliper] [local-client.js] 	txUpdateTime: 1000
+2021.10.18-16:39:18.686[32m info [39m [caliper] [local-client.js] 	Info: client 7530 init test :small_bank_operations
+2021.10.18-16:39:18.688[32m info [39m [caliper] [local-client.js] 	Info: client 7572 init test :small_bank_operations
+2021.10.18-16:39:18.691[32m info [39m [caliper] [local-client.js] 	Info: client 7522 init test :small_bank_operations
+2021.10.18-16:39:18.693[32m info [39m [caliper] [local-client.js] 	Info: client 7511 init test :small_bank_operations
+2021.10.18-16:39:18.693[32m info [39m [caliper] [local-client.js] 	Info: client 7505 init test :small_bank_operations
+2021.10.18-16:39:18.706[32m info [39m [caliper] [local-client.js] 	Info: client 7486 init test :small_bank_operations
+2021.10.18-16:39:18.709[32m info [39m [caliper] [local-client.js] 	Info: client 7445 init test :small_bank_operations
+2021.10.18-16:39:18.709[32m info [39m [caliper] [local-client.js] 	Info: client 7540 init test :small_bank_operations
+2021.10.18-16:39:18.710[32m info [39m [caliper] [local-client.js] 	Info: client 7552 init test :small_bank_operations
+2021.10.18-16:39:18.710[32m info [39m [caliper] [local-client.js] 	Info: client 7435 init test :small_bank_operations
+2021.10.18-16:39:18.712[32m info [39m [caliper] [local-client.js] 	Info: client 7452 init test :small_bank_operations
+2021.10.18-16:39:18.712[32m info [39m [caliper] [local-client.js] 	Info: client 7440 init test :small_bank_operations
+2021.10.18-16:39:18.714[32m info [39m [caliper] [local-client.js] 	Info: client 7561 init test :small_bank_operations
+2021.10.18-16:39:18.714[32m info [39m [caliper] [local-client.js] 	Info: client 7468 init test :small_bank_operations
+2021.10.18-16:39:18.715[32m info [39m [caliper] [local-client.js] 	Info: client 7498 init test :small_bank_operations
+2021.10.18-16:39:18.715[32m info [39m [caliper] [local-client.js] 	Info: client 7462 init test :small_bank_operations
+2021.10.18-16:39:18.754[32m info [39m [caliper] [local-client.js] 	Info: client 7475 init test :small_bank_operations
+2021.10.18-16:39:18.768[32m info [39m [caliper] [local-client.js] 	Info: client 7568 init test :small_bank_operations
+2021.10.18-16:39:18.770[32m info [39m [caliper] [local-client.js] 	Info: client 7516 init test :small_bank_operations
+2021.10.18-16:39:18.771[32m info [39m [caliper] [local-client.js] 	Info: client 7480 init test :small_bank_operations
+2021.10.18-16:39:19.687[32m info [39m [caliper] [local-client.js] 	Info: client 7530 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.690[32m info [39m [caliper] [local-client.js] 	Info: client 7572 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.692[32m info [39m [caliper] [local-client.js] 	Info: client 7522 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.693[32m info [39m [caliper] [local-client.js] 	Info: client 7511 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.695[32m info [39m [caliper] [local-client.js] 	Info: client 7505 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.707[32m info [39m [caliper] [local-client.js] 	Info: client 7486 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.711[32m info [39m [caliper] [local-client.js] 	Info: client 7445 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.711[32m info [39m [caliper] [local-client.js] 	Info: client 7540 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.711[32m info [39m [caliper] [local-client.js] 	Info: client 7552 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.712[32m info [39m [caliper] [local-client.js] 	Info: client 7435 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.712[32m info [39m [caliper] [local-client.js] 	Info: client 7452 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.714[32m info [39m [caliper] [local-client.js] 	Info: client 7440 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.714[32m info [39m [caliper] [local-client.js] 	Info: client 7468 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.715[32m info [39m [caliper] [local-client.js] 	Info: client 7561 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.715[32m info [39m [caliper] [local-client.js] 	Info: client 7498 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.717[32m info [39m [caliper] [local-client.js] 	Info: client 7462 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.756[32m info [39m [caliper] [local-client.js] 	Info: client 7475 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.770[32m info [39m [caliper] [local-client.js] 	Info: client 7568 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.771[32m info [39m [caliper] [local-client.js] 	Info: client 7516 start test runFixedNumber():small_bank_operations
+2021.10.18-16:39:19.772[32m info [39m [caliper] [local-client.js] 	Info: client 7480 start test runFixedNumber():small_bank_operations
+2021.10.18-16:40:10.098[32m info [39m [caliper] [report-builder] 	### Test result ###
+2021.10.18-16:40:10.107[32m info [39m [caliper] [report-builder] 	
++-----------------+-------+------+-----------------+-----------------+-----------------+-----------------+------------------+
+| Name            | Succ  | Fail | Send Rate (TPS) | Max Latency (s) | Min Latency (s) | Avg Latency (s) | Throughput (TPS) |
+|-----------------|-------|------|-----------------|-----------------|-----------------|-----------------|------------------|
+| smallOperations | 50000 | 0    | 1001.8          | 1.05            | 0.15            | 0.52            | 996.0            |
++-----------------+-------+------+-----------------+-----------------+-----------------+-----------------+------------------+
+
+2021.10.18-16:40:10.111[32m info [39m [caliper] [report-builder] 	### docker resource stats ###'
+2021.10.18-16:40:10.123[32m info [39m [caliper] [report-builder] 	
++--------+----------------------------------------------------------------------------------------------------------+-------------+-------------+------------+------------+------------+-------------+-----------+------------+
+| Type   | Name                                                                                                     | Memory(max) | Memory(avg) | CPU% (max) | CPU% (avg) | Traffic In | Traffic Out | Disc Read | Disc Write |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_configtxgen_utils-cgxnd_default_8a8c7c71-4d8f-4cd6-87b7-94f330fcdfbc_0                               | 0B          | 0B          | 0.00       | 0.00       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_cryptogen_utils-cgxnd_default_8a8c7c71-4d8f-4cd6-87b7-94f330fcdfbc_0                                 | 0B          | 0B          | 0.00       | 0.00       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_POD_utils-cgxnd_default_8a8c7c71-4d8f-4cd6-87b7-94f330fcdfbc_0                                       | 0B          | 0B          | 0.00       | 0.00       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_copyartifacts_copyartifacts-8bxqc_default_bd2358ca-c3eb-4767-8411-653bc1f1de92_0                     | 0B          | 0B          | 0.00       | 0.00       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_POD_copyartifacts-8bxqc_default_bd2358ca-c3eb-4767-8411-653bc1f1de92_0                               | 0B          | 0B          | 0.00       | 0.00       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_coredns_coredns-558bd4d5db-4xqfq_kube-system_06ae0c80-80cc-454e-8d44-3bf2ec5d113b_0                  | 19.8MB      | 19.8MB      | 0.40       | 0.25       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_coredns_coredns-558bd4d5db-l7tcl_kube-system_7b91f85d-9dcc-402d-bdb6-5be0e953f3ee_0                  | 18.1MB      | 18.1MB      | 0.43       | 0.29       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_POD_coredns-558bd4d5db-l7tcl_kube-system_7b91f85d-9dcc-402d-bdb6-5be0e953f3ee_0                      | 1.2MB       | 1.2MB       | 0.00       | 0.00       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_POD_coredns-558bd4d5db-4xqfq_kube-system_06ae0c80-80cc-454e-8d44-3bf2ec5d113b_0                      | 1.2MB       | 1.2MB       | 0.00       | 0.00       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_kube-flannel_kube-flannel-ds-dvqmq_kube-system_f137ce9e-6f6c-4700-a8d3-33b0fb5ffb0a_0                | 25.4MB      | 25.0MB      | 1.79       | 0.35       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_install-cni_kube-flannel-ds-dvqmq_kube-system_f137ce9e-6f6c-4700-a8d3-33b0fb5ffb0a_0                 | 0B          | 0B          | 0.00       | 0.00       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_install-cni-plugin_kube-flannel-ds-dvqmq_kube-system_f137ce9e-6f6c-4700-a8d3-33b0fb5ffb0a_0          | 0B          | 0B          | 0.00       | 0.00       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_POD_kube-flannel-ds-dvqmq_kube-system_f137ce9e-6f6c-4700-a8d3-33b0fb5ffb0a_0                         | 916.0KB     | 916.0KB     | 0.00       | 0.00       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_kube-proxy_kube-proxy-vzx5m_kube-system_5b5b7853-1a5b-481f-91fa-3d953b637c1b_0                       | 27.3MB      | 27.1MB      | 0.88       | 0.04       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_POD_kube-proxy-vzx5m_kube-system_5b5b7853-1a5b-481f-91fa-3d953b637c1b_0                              | 1.0MB       | 1.0MB       | 0.00       | 0.00       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_kube-controller-manager_kube-controller-manager-baas2_kube-system_3f76a1c382bb6e2526d2185f57e69e71_0 | 64.1MB      | 63.8MB      | 3.32       | 1.79       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_kube-scheduler_kube-scheduler-baas2_kube-system_dc7a1be3999f9b6ea7c1d1d4d02e53d9_0                   | 24.6MB      | 24.6MB      | 1.78       | 0.42       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_etcd_etcd-baas2_kube-system_e851bfc17fbe968d5ce0390cc06dea69_0                                       | 75.6MB      | 75.4MB      | 4.25       | 1.62       | 0B         | -           | 0B        | 1.3MB      |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_kube-apiserver_kube-apiserver-baas2_kube-system_9a3f3101dfdd7a77e78411e48320e870_0                   | 306.1MB     | 306.1MB     | 35.30      | 6.50       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_POD_kube-apiserver-baas2_kube-system_9a3f3101dfdd7a77e78411e48320e870_0                              | 1.3MB       | 1.3MB       | 0.00       | 0.00       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_POD_etcd-baas2_kube-system_e851bfc17fbe968d5ce0390cc06dea69_0                                        | 940.0KB     | 940.0KB     | 0.00       | 0.00       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_POD_kube-scheduler-baas2_kube-system_dc7a1be3999f9b6ea7c1d1d4d02e53d9_0                              | 864.0KB     | 864.0KB     | 0.00       | 0.00       | 0B         | -           | 0B        | 0B         |
+|--------|----------------------------------------------------------------------------------------------------------|-------------|-------------|------------|------------|------------|-------------|-----------|------------|
+| Docker | k8s_POD_kube-controller-manager-baas2_kube-system_3f76a1c382bb6e2526d2185f57e69e71_0                     | 908.0KB     | 908.0KB     | 0.00       | 0.00       | 0B         | -           | 0B        | 0B         |
++--------+----------------------------------------------------------------------------------------------------------+-------------+-------------+------------+------------+------------+-------------+-----------+------------+
+
+2021.10.18-16:40:10.123[32m info [39m [caliper] [defaultTest] 	------ Passed 'smallOperations' testing ------
+2021.10.18-16:40:10.124[32m info [39m [caliper] [caliper-flow] 	---------- Finished Test ----------
+
+2021.10.18-16:40:10.124[32m info [39m [caliper] [report-builder] 	### All test results ###
+2021.10.18-16:40:10.124[32m info [39m [caliper] [report-builder] 	
++-----------------+-------+------+-----------------+-----------------+-----------------+-----------------+------------------+
+| Name            | Succ  | Fail | Send Rate (TPS) | Max Latency (s) | Min Latency (s) | Avg Latency (s) | Throughput (TPS) |
+|-----------------|-------|------|-----------------|-----------------|-----------------|-----------------|------------------|
+| smallOperations | 50000 | 0    | 1001.8          | 1.05            | 0.15            | 0.52            | 996.0            |
++-----------------+-------+------+-----------------+-----------------+-----------------+-----------------+------------------+
+
+2021.10.18-16:40:10.239[32m info [39m [caliper] [caliper-flow] 	Generated report with path /home/oslab/go/src/github.com/consensus-performance/caliper_es/report.html
+2021.10.18-16:40:10.240[32m info [39m [caliper] [caliper-flow] 	
+
+#######################################
+# Test summary: 1 succeeded, 0 failed #
+#######################################
+
+2021.10.18-16:40:10.241[32m info [39m [caliper] [caliper-utils] 	Executing command: cd /home/oslab/go/src/github.com/consensus-performance/caliper_es;sleep 1s;
+2021.10.18-16:40:10.281[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.282[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.283[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.285[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.285[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.286[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.287[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.288[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.292[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.293[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.294[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.298[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.299[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.301[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.303[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.303[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.303[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.307[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.309[32m info [39m [caliper] [client.js] 	Client exited with code null
+2021.10.18-16:40:10.315[32m info [39m [caliper] [client.js] 	Client exited with code null
+Benchmark run successful
+
+Command succeeded
+

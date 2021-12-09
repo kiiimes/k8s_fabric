@@ -1,0 +1,185 @@
+name: Fabric
+version: "1.0"
+mutual-tls: false
+
+caliper:
+        blockchain: fabric
+        command:
+                start: export NETWORK_MODE_NAME=raft_peer; export FABRIC_VERSION=1.4.4; sleep 2s
+                end: sleep 1s;
+                
+info: 
+        Version: 1.4.4
+        Size: 2 Orgs with 2 Peers
+        Orderer: Raft
+        Distribution: Multi Host
+        StateDB: GoLevelDB
+
+clients:
+        client0.org1.oslab.com:
+                client:
+                        organization: Org1
+                        credentialStore:
+                                path: /tmp/raft-kvs/org1
+                                cryptoStore:
+                                        path: /tmp/raft-cvs/org1
+                        clientPrivateKey:
+                                path: network/config/raft/crypto-config/peerOrganizations/org1.oslab.com/users/User1@org1.oslab.com/msp/keystore/client1_key
+                                
+                        clientSignedCert:
+                                path: network/config/raft/crypto-config/peerOrganizations/org1.oslab.com/users/User1@org1.oslab.com/msp/signcerts/User1@org1.oslab.com-cert.pem
+        client0.org2.oslab.com:
+                client:
+                        organization: Org2
+                        credentialStore:
+                                path: /tmp/raft-kvs/org2
+                                cryptoStore:
+                                        path: /tmp/raft-cvs/org2
+                        clientPrivateKey:
+                                path: network/config/raft/crypto-config/peerOrganizations/org2.oslab.com/users/User1@org2.oslab.com/msp/keystore/client2_key
+                                
+                        clientSignedCert:
+                                path: network/config/raft/crypto-config/peerOrganizations/org2.oslab.com/users/User1@org2.oslab.com/msp/signcerts/User1@org2.oslab.com-cert.pem
+
+
+channels:
+        oslab:
+                configBinary: network/config/raft/channel-artifacts/channel.tx
+                created: false
+                orderers: 
+                - orderer0.oslab.com
+                - orderer1.oslab.com
+                - orderer2.oslab.com
+                
+                peers:
+                        peer0.org1.oslab.com:
+                                eventSource: true
+                        peer1.org1.oslab.com:
+                                eventSource: true
+                        peer0.org2.oslab.com:
+                                eventSource: true
+                        peer1.org2.oslab.com:
+                                eventSource: true
+                chaincodes:
+                - id: smallbank
+                  version: v0
+                  language: golang
+                  path: fabric/scenario/smallbank/go
+                # - id: simple
+                #   version: v0
+                #   language: golang
+                #   path: fabric/scenario/simple/go
+                # - id: marbles
+                #   version: v0
+                #   language: golang
+                #   path: fabric/scenario/marbles/go
+                                
+organizations:
+        Org1:
+                mspid: Org1MSP
+                peers:
+                - peer0.org1.oslab.com
+                - peer1.org1.oslab.com
+                certificateAuthorities:
+                - ca.org1.oslab.com
+                adminPrivateKey:
+                        path: network/config/raft/crypto-config/peerOrganizations/org1.oslab.com/users/Admin@org1.oslab.com/msp/keystore/org1_key
+                signedCert:
+                        path: network/config/raft/crypto-config/peerOrganizations/org1.oslab.com/users/Admin@org1.oslab.com/msp/signcerts/Admin@org1.oslab.com-cert.pem
+
+        Org2:
+                mspid: Org2MSP
+                peers:
+                - peer0.org2.oslab.com
+                - peer1.org2.oslab.com
+                certificateAuthorities:
+                - ca.org2.oslab.com
+                adminPrivateKey:
+                        path: network/config/raft/crypto-config/peerOrganizations/org2.oslab.com/users/Admin@org2.oslab.com/msp/keystore/org2_key
+                signedCert:
+                        path: network/config/raft/crypto-config/peerOrganizations/org2.oslab.com/users/Admin@org2.oslab.com/msp/signcerts/Admin@org2.oslab.com-cert.pem
+
+orderers:
+        orderer0.oslab.com:
+                url: grpcs://172.51.0.2:7050
+                grpcOptions:
+                        ssl-target-name-override: orderer0.oslab.com
+                        grpc.keepalive_time_ms: 60000
+                tlsCACerts:
+                        path: network/config/raft/crypto-config/ordererOrganizations/oslab.com/orderers/orderer0.oslab.com/msp/tlscacerts/tlsca.oslab.com-cert.pem
+        
+        orderer1.oslab.com:
+                url: grpcs://172.51.0.3:7050
+                grpcOptions:
+                        ssl-target-name-override: orderer1.oslab.com
+                        grpc.keepalive_time_ms: 60000
+                tlsCACerts:
+                        path: network/config/raft/crypto-config/ordererOrganizations/oslab.com/orderers/orderer1.oslab.com/msp/tlscacerts/tlsca.oslab.com-cert.pem
+
+        orderer2.oslab.com:
+                url: grpcs://172.51.0.4:7050
+                grpcOptions:
+                        ssl-target-name-override: orderer2.oslab.com
+                        grpc.keepalive_time_ms: 60000
+                tlsCACerts:
+                        path: network/config/raft/crypto-config/ordererOrganizations/oslab.com/orderers/orderer2.oslab.com/msp/tlscacerts/tlsca.oslab.com-cert.pem
+
+peers:
+        peer0.org1.oslab.com:
+                url: grpcs://172.53.0.2:7051
+                grpcOptions:
+                        ssl-target-name-override: peer0.org1.oslab.com
+                        grpc.keepalive_time_ms: 60000
+                        # grpc.keepalive_time_ms: 300s
+                tlsCACerts:
+                        path: network/config/raft/crypto-config/peerOrganizations/org1.oslab.com/peers/peer0.org1.oslab.com/msp/tlscacerts/tlsca.org1.oslab.com-cert.pem
+        
+        peer1.org1.oslab.com:
+                url: grpcs://172.53.0.3:7051
+                grpcOptions:
+                        ssl-target-name-override: peer1.org1.oslab.com
+                        grpc.keepalive_time_ms: 60000
+                        # grpc.keepalive_time_ms: 300s
+                tlsCACerts:
+                        path: network/config/raft/crypto-config/peerOrganizations/org1.oslab.com/peers/peer1.org1.oslab.com/msp/tlscacerts/tlsca.org1.oslab.com-cert.pem
+
+        peer0.org2.oslab.com:
+                url: grpcs://172.53.0.4:7051
+                grpcOptions:
+                        ssl-target-name-override: peer0.org2.oslab.com
+                        grpc.keepalive_time_ms: 60000
+                        # grpc.keepalive_time_ms: 300s
+                tlsCACerts:
+                        path: network/config/raft/crypto-config/peerOrganizations/org2.oslab.com/peers/peer0.org2.oslab.com/msp/tlscacerts/tlsca.org2.oslab.com-cert.pem
+
+        peer1.org2.oslab.com:
+                url: grpcs://172.53.0.5:7051
+                grpcOptions:
+                        ssl-target-name-override: peer1.org2.oslab.com
+                        grpc.keepalive_time_ms: 60000
+                        # grpc.keepalive_time_ms: 300s
+                tlsCACerts:
+                        path: network/config/raft/crypto-config/peerOrganizations/org2.oslab.com/peers/peer1.org2.oslab.com/msp/tlscacerts/tlsca.org2.oslab.com-cert.pem
+
+certificateAuthorities:
+        ca.org1.oslab.com:
+                url: https://172.54.0.2:7054
+                httpOptions:
+                        verify: false
+                tlsCACerts:
+                        path: network/config/raft/crypto-config/peerOrganizations/org1.oslab.com/tlsca/tlsca.org1.oslab.com-cert.pem
+                        # path: networks/fabric/config_raft/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+                registrar:
+                - enrollId: admin    
+                  enrollSecret: adminpw
+
+        ca.org2.oslab.com:
+                url: https://172.54.0.3:7054
+                httpOptions:
+                        verify: false
+                tlsCACerts:
+                        path: network/config/raft/crypto-config/peerOrganizations/org2.oslab.com/tlsca/tlsca.org2.oslab.com-cert.pem
+                        # path: networks/fabric/config_raft/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+                registrar:
+                - enrollId: admin    
+                  enrollSecret: adminpw

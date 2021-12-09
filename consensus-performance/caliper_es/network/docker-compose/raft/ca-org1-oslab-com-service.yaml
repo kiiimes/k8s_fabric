@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ca-org1-oslab-com
+spec:
+  ports:
+    - name: "7054"
+      port: 7054
+      targetPort: 7054
+  selector:
+    name: ca-org1-oslab-com

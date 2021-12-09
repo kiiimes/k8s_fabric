@@ -1,0 +1,141 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: chaincodeinstall
+spec:
+  backoffLimit: 1
+  template:
+    metadata:
+      name: chaincodeinstall
+    spec:
+      restartPolicy: "Never"
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      containers:
+      - name: chaincodeinstall1
+        image: hyperledger/fabric-tools:1.4
+        #imagePullPolicy: Always
+        command: ["sh", "-c", "echo $GOPATH; cp -r /shared/artifacts/chaincode $GOPATH/src/; ls $GOPATH/src; peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -p smallbank/go/"]
+        env:
+        - name: CHAINCODE_NAME
+          value: "smallbank"
+        - name: CHAINCODE_VERSION
+          value: "v0"
+        - name: FABRIC_CFG_PATH
+          value: /etc/hyperledger/fabric
+        - name: CORE_PEER_MSPCONFIGPATH
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/users/Admin@org1-oslab-com/msp
+        - name: CORE_PEER_LOCALMSPID
+          value: Org1MSP
+        - name: CORE_PEER_ADDRESS
+          value: peer0:7051
+        - name: GODEBUG
+          value: "netdns=go"
+        - name: CORE_PEER_TLS_ENABLED
+          value: "true"
+        - name: CORE_PEER_TLS_CERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer0-org1-oslab-com/tls/server.crt
+        - name: CORE_PEER_TLS_KEY_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer0-org1-oslab-com/tls/server.key
+        - name: CORE_PEER_TLS_ROOTCERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer0-org1-oslab-com/tls/ca.crt
+
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+
+      - name: chaincodeinstall2
+        image: hyperledger/fabric-tools:1.4
+        #imagePullPolicy: Always
+        command: ["sh", "-c", "echo $GOPATH; cp -r /shared/artifacts/chaincode $GOPATH/src/; ls $GOPATH/src; peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -p smallbank/go/"]
+        env:
+        - name: CHAINCODE_NAME
+          value: "smallbank"
+        - name: CHAINCODE_VERSION
+          value: "v0"
+        - name: FABRIC_CFG_PATH
+          value: /etc/hyperledger/fabric
+        - name: CORE_PEER_MSPCONFIGPATH
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/users/Admin@org1-oslab-com/msp
+        - name: CORE_PEER_LOCALMSPID
+          value: Org1MSP
+        - name: CORE_PEER_ADDRESS
+          value: peer1:7051
+        - name: GODEBUG
+          value: "netdns=go"
+        - name: CORE_PEER_TLS_ENABLED
+          value: "true"
+        - name: CORE_PEER_TLS_CERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer1-org1-oslab-com/tls/server.crt
+        - name: CORE_PEER_TLS_KEY_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer1-org1-oslab-com/tls/server.key
+        - name: CORE_PEER_TLS_ROOTCERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer1-org1-oslab-com/tls/ca.crt
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+
+      - name: chaincodeinstall3
+        image: hyperledger/fabric-tools:1.4
+        #imagePullPolicy: Always
+        command: ["sh", "-c", "echo $GOPATH; cp -r /shared/artifacts/chaincode $GOPATH/src/; ls $GOPATH/src; peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -p smallbank/go/"]
+        env:
+        - name: CHAINCODE_NAME
+          value: "smallbank"
+        - name: CHAINCODE_VERSION
+          value: "v0"
+        - name: FABRIC_CFG_PATH
+          value: /etc/hyperledger/fabric
+        - name: CORE_PEER_MSPCONFIGPATH
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/users/Admin@org2-oslab-com/msp
+        - name: CORE_PEER_LOCALMSPID
+          value: Org2MSP
+        - name: CORE_PEER_ADDRESS
+          value: peer2:7051
+        - name: GODEBUG
+          value: "netdns=go"
+        - name: CORE_PEER_TLS_ENABLED
+          value: "true"
+        - name: CORE_PEER_TLS_CERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer2-org2-oslab-com/tls/server.crt
+        - name: CORE_PEER_TLS_KEY_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer2-org2-oslab-com/tls/server.key
+        - name: CORE_PEER_TLS_ROOTCERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer2-org2-oslab-com/tls/ca.crt
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+
+      - name: chaincodeinstall4
+        image: hyperledger/fabric-tools:1.4
+        #imagePullPolicy: Always
+        command: ["sh", "-c", "echo $GOPATH; cp -r /shared/artifacts/chaincode $GOPATH/src/; ls $GOPATH/src; peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -p smallbank/go/"]
+        env:
+        - name: CHAINCODE_NAME
+          value: "smallbank"
+        - name: CHAINCODE_VERSION
+          value: "v0"
+        - name: FABRIC_CFG_PATH
+          value: /etc/hyperledger/fabric
+        - name: CORE_PEER_MSPCONFIGPATH
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/users/Admin@org2-oslab-com/msp
+        - name: CORE_PEER_LOCALMSPID
+          value: Org2MSP
+        - name: CORE_PEER_ADDRESS
+          value: peer3:7051
+        - name: GODEBUG
+          value: "netdns=go"
+        - name: CORE_PEER_TLS_ENABLED
+          value: "true"
+        - name: CORE_PEER_TLS_CERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer3-org2-oslab-com/tls/server.crt
+        - name: CORE_PEER_TLS_KEY_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer3-org2-oslab-com/tls/server.key
+        - name: CORE_PEER_TLS_ROOTCERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer3-org2-oslab-com/tls/ca.crt
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume

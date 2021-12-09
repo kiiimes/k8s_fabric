@@ -1,0 +1,19 @@
+OrdererOrgs:
+  - Name: Orderer
+    Domain: oslab.com
+    Template:
+      Count: 4
+
+PeerOrgs:
+  - Name: Org1
+    Domain: org1.oslab.com
+    Template:
+      Count: 2
+    Users:
+      Count: 1
+  - Name: Org2
+    Domain: org2.oslab.com
+    Template:
+      Count: 2
+    Users:
+      Count: 1  

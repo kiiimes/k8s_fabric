@@ -1,0 +1,29 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: peer1-org2-oslab-com-pv0
+  labels:
+    type: local
+    name: peer1-org2-oslab-com-volume0
+spec:
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/var/run/"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: peer1-org2-oslab-com-claim0
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+  selector:
+    matchLabels:
+      name: peer1-org2-oslab-com-volume0

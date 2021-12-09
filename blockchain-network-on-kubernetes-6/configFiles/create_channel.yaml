@@ -1,0 +1,32 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: createchannel
+spec:
+  backoffLimit: 1
+  template:
+    metadata:
+      name: createchannel
+    spec:
+      nodeSelector:
+        fabricType: peer
+      restartPolicy: "Never"
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      containers:
+      - name: createchanneltx
+        image: hyperledger/fabric-tools:1.4.4
+        #imagePullPolicy: Always
+        command: ["sh", "-c", "cd /shared && pwd && ls && export FABRIC_CFG_PATH=$PWD && configtxgen -profile ChannelConfig -outputCreateChannelTx channel.tx -channelID ${CHANNEL_NAME} && sleep 1s && configtxgen -profile ChannelConfig -channelID oslab -outputAnchorPeersUpdate Org1MSPanchors.tx -asOrg Org1MSP && sleep 1s && configtxgen -profile ChannelConfig -channelID oslab -outputAnchorPeersUpdate Org2MSPanchors.tx -asOrg Org2MSP && sleep 15s && touch /shared/status_channeltx_complete "]
+        env:
+        - name: CHANNEL_NAME
+          value: oslab
+        - name: GODEBUG
+          value: "netdns=go"
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+

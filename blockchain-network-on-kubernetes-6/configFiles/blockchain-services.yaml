@@ -1,0 +1,174 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ca1
+  labels:
+    run: ca1
+spec:
+  type: NodePort
+  selector:
+    name: ca1
+  ports:
+  - protocol: TCP
+    nodePort: 30054
+    targetPort: 7054
+    port: 7054
+    name: grpc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ca2
+  labels:
+    run: ca2
+spec:
+  type: NodePort
+  selector:
+    name: ca2
+  ports:
+  - protocol: TCP
+    nodePort: 30064
+    targetPort: 7054
+    port: 7054
+    name: grpc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orderer0
+  labels:
+    run: orderer0
+spec:
+  type: NodePort
+  selector:
+    name: orderer0
+  ports:
+  - protocol: TCP
+    nodePort: 31010
+    targetPort: 7050
+    port: 7050
+    name: grpc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orderer1
+  labels:
+    run: orderer1
+spec:
+  type: NodePort
+  selector:
+    name: orderer1
+  ports:
+  - protocol: TCP
+    nodePort: 31110
+    targetPort: 7050
+    port: 7050
+    name: grpc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orderer2
+  labels:
+    run: orderer2
+spec:
+  type: NodePort
+  selector:
+    name: orderer2
+  ports:
+  - protocol: TCP
+    nodePort: 31210
+    targetPort: 7050
+    port: 7050
+    name: grpc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: peer0
+  labels:
+    run: peer0
+spec:
+  type: NodePort
+  selector:
+    name: peer0
+  ports:
+  - protocol: TCP
+    nodePort: 30110
+    targetPort: 7051
+    port: 7051
+    name: grpc
+  - protocol: TCP
+    nodePort: 30111
+    targetPort: 7052
+    port: 7052
+    name: events
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: peer1
+  labels:
+    run: peer1
+spec:
+  type: NodePort
+  selector:
+    name: peer1
+  ports:
+  - protocol: TCP
+    nodePort: 30210
+    targetPort: 7051
+    port: 7051
+    name: grpc
+  - protocol: TCP
+    nodePort: 30211
+    targetPort: 7052
+    port: 7052
+    name: events
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: peer2
+  labels:
+    run: peer2
+spec:
+  type: NodePort
+  selector:
+    name: peer2
+  ports:
+  - protocol: TCP
+    nodePort: 30310
+    targetPort: 7051
+    port: 7051
+    name: grpc
+  - protocol: TCP
+    nodePort: 30311
+    targetPort: 7052
+    port: 7052
+    name: events
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: peer3
+  labels:
+    run: peer3
+spec:
+  type: NodePort
+  selector:
+    name: peer3
+  ports:
+  - protocol: TCP
+    nodePort: 30410
+    targetPort: 7051
+    port: 7051
+    name: grpc
+  - protocol: TCP
+    nodePort: 30411
+    targetPort: 7052
+    port: 7052
+    name: events
+---

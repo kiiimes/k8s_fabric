@@ -1,0 +1,84 @@
+---
+
+Organizations:
+- &OrdererOrg
+    Name: OrdererMSP
+    ID: OrdererMSP
+    MSPDir: crypto-config/ordererOrganizations/oslab.com/msp
+    AdminPrincipal: Role.MEMBER
+
+- &Org1
+    Name: Org1MSP
+    ID: Org1MSP
+    MSPDir: crypto-config/peerOrganizations/org1.oslab.com/msp
+    AdminPrincipal: Role.ADMIN
+    AnchorPeers:
+    - Host: peer0.org1.oslab.com
+      Port: 7051
+
+- &Org2
+    Name: Org2MSP
+    ID: Org2MSP
+    MSPDir: crypto-config/peerOrganizations/org2.oslab.com/msp
+    AdminPrincipal: Role.ADMIN
+    AnchorPeers:
+    - Host: peer0.org2.oslab.com
+      Port: 7051
+
+
+Orderer: &OrdererDefaults
+  OrdererType: kafka
+  Addresses:
+  - orderer0.oslab.com:7050
+  - orderer1.oslab.com:7050
+  - orderer2.oslab.com:7050
+  - orderer3.oslab.com:7050
+  - orderer4.oslab.com:7050
+  - orderer5.oslab.com:7050
+  - orderer6.oslab.com:7050
+  - orderer7.oslab.com:7050
+  - orderer8.oslab.com:7050
+  - orderer9.oslab.com:7050
+  BatchTimeout: 20s
+  BatchSize:
+      MaxMessageCount: 100
+      AbsoluteMaxBytes: 500 MB
+      PreferredMaxBytes: 512 KB
+  MaxChannels: 1
+  Kafka:
+    Brokers:
+      - kafka0:9092
+      - kafka1:9092
+      - kafka2:9092
+      - kafka3:9092
+      - kafka4:9092
+      - kafka5:9092
+      - kafka6:9092
+      - kafka7:9092
+      - kafka8:9092
+      - kafka9:9092
+
+  Organizations:
+
+Application: &ApplicationDefaults
+  Organizations:
+
+Profiles:
+  OrdererGenesis:
+    Orderer:
+      <<: *OrdererDefaults
+      Organizations:
+      - *OrdererOrg
+    Consortiums:
+      SampleConsortium:
+        Organizations:
+          - *Org1
+          - *Org2
+  ChannelConfig:
+    Consortium: SampleConsortium
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+      - *Org1
+      - *Org2
+

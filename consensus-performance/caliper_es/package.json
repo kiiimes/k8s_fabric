@@ -1,0 +1,19 @@
+{
+  "name": "caliper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hyperledger/caliper-cli": "^0.2.0",
+    "fabric-client": "^1.4.14",
+    "fabric-network": "^1.4.14",
+    "fabric-protos": "^2.0.0-snapshot.1"
+  },
+  "devDependencies": {},
+  "description": ""
+}

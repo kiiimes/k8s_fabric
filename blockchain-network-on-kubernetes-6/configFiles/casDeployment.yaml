@@ -1,0 +1,90 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ca1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: ca1
+  template:
+    metadata:
+      labels:
+        name: ca1
+    spec:
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      containers:
+      - name: ca1
+        image: hyperledger/fabric-ca:1.4.4
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done; fabric-ca-server start -b admin:adminpw -d"]
+        env:
+        - name: FABRIC_CA_SERVER_CA_NAME
+          value: "CA1"
+        - name: FABRIC_CA_HOME
+          value: /etc/hyperledger/fabric-ca-server
+        - name: FABRIC_CA_SERVER_CA_CERTFILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/ca/ca.org1-oslab-com-cert.pem
+        - name: FABRIC_CA_SERVER_CA_KEYFILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/ca/key.pem
+        - name: FABRIC_CA_SERVER_TLS_ENABLED
+          value: "true"
+        - name: FABRIC_CA_SERVER_TLS_CERTFILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/tlsca/tlsca.org1-oslab-com-cert.pem
+        - name: FABRIC_CA_SERVER_TLS_KEYFILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/tlsca/key.pem
+        - name: GODEBUG
+          value: "netdns=go"
+        #- name: FABRIC_CA_SERVER_DEBUG
+        #  value: "true"
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ca2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: ca2
+  template:
+    metadata:
+      labels:
+        name: ca2
+    spec:
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      containers:
+      - name: ca1
+        image: hyperledger/fabric-ca:1.4.4
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done; fabric-ca-server start -b admin:adminpw -d"]
+        env:
+        - name: FABRIC_CA_SERVER_CA_NAME
+          value: "CA2"
+        - name: FABRIC_CA_HOME
+          value: /etc/hyperledger/fabric-ca-server
+        - name: FABRIC_CA_SERVER_CA_CERTFILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/ca/ca.org2-oslab-com-cert.pem
+        - name: FABRIC_CA_SERVER_CA_KEYFILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/ca/key.pem
+        - name: FABRIC_CA_SERVER_TLS_ENABLED
+          value: "true"
+        - name: FABRIC_CA_SERVER_TLS_CERTFILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/tlsca/tlsca.org2-oslab-com-cert.pem
+        - name: FABRIC_CA_SERVER_TLS_KEYFILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/tlsca/key.pem
+        - name: GODEBUG
+          value: "netdns=go"
+        #- name: FABRIC_CA_SERVER_DEBUG
+        #  value: "true"
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume

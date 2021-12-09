@@ -1,0 +1,71 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: createchannel
+spec:
+  backoffLimit: 1
+  template:
+    metadata:
+      name: createchannel
+    spec:
+      nodeSelector:
+        fabricType: others
+      restartPolicy: "Never"
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      containers:
+      - name: createchanneltx
+        image: hyperledger/fabric-tools:1.4.4
+        #imagePullPolicy: Always
+        command: ["sh", "-c", "cd /shared && pwd && ls && export FABRIC_CFG_PATH=$PWD && configtxgen -profile ChannelConfig -outputCreateChannelTx channel.tx -channelID ${CHANNEL_NAME} && sleep 1s && configtxgen -profile ChannelConfig -channelID oslab -outputAnchorPeersUpdate Org1MSPanchors.tx -asOrg Org1MSP && sleep 1s && configtxgen -profile ChannelConfig -channelID oslab -outputAnchorPeersUpdate Org2MSPanchors.tx -asOrg Org2MSP && sleep 15s && touch /shared/status_channeltx_complete "]
+        env:
+        - name: CHANNEL_NAME
+          value: oslab
+        - name: GODEBUG
+          value: "netdns=go"
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+
+#      - name: createchannel
+#        image: hyperledger/fabric-peer:1.4
+#        imagePullPolicy: Always
+#        #command: ["sh", "-c", "while [ ! -f /shared/status_channeltx_complete ]; do echo Waiting for channeltx; sleep 2; done; peer channel create -o ${ORDERER_URL} -c ${CHANNEL_NAME} -f /shared/${CHANNEL_NAME}.tx && rm /shared/status_channeltx_complete && touch /shared/statuus_channelcreate_complete"]
+#        command: ["sh", "-c", "while [ ! -f /shared/status_channeltx_complete ]; do echo Waiting for channeltx; sleep 2; done; peer channel create -o ${ORDERER_URL} -c ${CHANNEL_NAME} -f /shared/channel.tx --tls --cafile /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/msp/tlscacerts/tlsca.oslab-com-cert.pem && rm /shared/status_channeltx_complete && touch /shared/status_channelcreate_complete"]
+#        env:
+#        - name: CHANNEL_NAME
+#          value: oslab
+#        - name: ORDERER_URL
+#          value: orderer0:7050
+#        - name: CORE_PEER_ADDRESSAUTODETECT
+#          value: "true"
+#        - name: CORE_PEER_ID
+#          value: peer0
+#        - name: CORE_PEER_NETWORKID
+#          value: nid1
+#        - name: CORE_PEER_LOCALMSPID
+#          value: Org1MSP
+#        - name: CORE_PEER_MSPCONFIGPATH
+         # value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer0-org1-oslab-com/msp/
+
+#          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/users/Admin@org1-oslab-com/msp/
+#        - name: FABRIC_LOGGING_SPEC
+#          value: debug
+#        - name: FABRIC_CFG_PATH
+#          value: /etc/hyperledger/fabric
+#        - name: GODEBUG
+#          value: "netdns=go"
+#        - name: CORE_PEER_TLS_ENABLED
+#          value: "true"
+#        - name: CORE_PEER_TLS_CERT_FILE
+#          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer0-org1-oslab-com/tls/server.crt
+ #       - name: CORE_PEER_TLS_KEY_FILE
+ #         value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer0-org1-oslab-com/tls/server.key
+ #       - name: CORE_PEER_TLS_ROOTCERT_FILE
+ #         value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer0-org1-oslab-com/tls/ca.crt
+ #       volumeMounts:
+ #       - mountPath: /shared
+ #         name: sharedvolume

@@ -1,0 +1,179 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: joinchannel
+spec:
+  backoffLimit: 1
+  template:
+    metadata:
+      name: joinchannel
+    spec:
+      restartPolicy: "Never"
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      containers:
+      - name: joinchannel1
+        image: hyperledger/fabric-peer:1.4.4
+        #imagePullPolicy: Always
+        command: ["sh", "-c", "peer channel fetch newest -o ${ORDERER_URL} -c ${CHANNEL_NAME} --tls --cafile /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/tls/ca.crt && peer channel join -b ${CHANNEL_NAME}_newest.block "]
+        env:
+        - name: CHANNEL_NAME
+          value: oslab
+        - name: ORDERER_URL
+          value: orderer0:7050
+        - name: CORE_PEER_ID
+          value: peer0
+        - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+          value: peer0:7051
+        - name: CORE_PEER_NETWORKID
+          value: nid1
+        - name: CORE_PEER_ADDRESSAUTODETECT
+          value: "true"
+        - name: CORE_PEER_ADDRESS
+          value: peer0:7051
+        - name: FABRIC_LOGGING_SPEC
+          value: error:error
+        - name: CORE_PEER_LOCALMSPID
+          value: Org1MSP
+        - name: CORE_PEER_MSPCONFIGPATH
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/users/Admin@org1-oslab-com/msp
+        - name: CORE_VM_ENDPOINT
+          value: unix:///host/var/run/docker.sock
+        - name: GODEBUG
+          value: "netdns=go"
+        - name: CORE_PEER_TLS_ENABLED
+          value: "true"
+        - name: CORE_PEER_TLS_KEY_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer0-org1-oslab-com/tls/server.key
+        - name: CORE_PEER_TLS_CERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer0-org1-oslab-com/tls/server.crt
+        - name: CORE_PEER_TLS_ROOTCERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer0-org1-oslab-com/tls/ca.crt
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+
+      - name: joinchannel2
+        image: hyperledger/fabric-peer:1.4.4
+        #imagePullPolicy: Always
+        command: ["sh", "-c", "peer channel fetch newest -o ${ORDERER_URL} -c ${CHANNEL_NAME} --tls --cafile /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/tls/ca.crt && peer channel join -b ${CHANNEL_NAME}_newest.block "]
+        env:
+        - name: CHANNEL_NAME
+          value: oslab
+        - name: ORDERER_URL
+          value: orderer0:7050
+        - name: CORE_PEER_ADDRESSAUTODETECT
+          value: "true"
+        - name: CORE_PEER_ADDRESS
+          value: peer1:7051
+        - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+          value: peer1:7051
+        - name: CORE_PEER_NETWORKID
+          value: nid1
+        - name: CORE_PEER_LOCALMSPID
+          value: Org1MSP
+        - name: CORE_PEER_MSPCONFIGPATH
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/users/Admin@org1-oslab-com/msp
+        - name: FABRIC_LOGGING_SPEC
+          value: error:error
+        - name: CORE_VM_ENDPOINT
+          value: unix:///host/var/run/docker.sock
+        - name: GODEBUG
+          value: "netdns=go"
+        - name: CORE_PEER_TLS_ENABLED
+          value: "true"
+        - name: CORE_PEER_TLS_KEY_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer1-org1-oslab-com/tls/server.key
+        - name: CORE_PEER_TLS_CERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer1-org1-oslab-com/tls/server.crt
+        - name: CORE_PEER_TLS_ROOTCERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer1-org1-oslab-com/tls/ca.crt
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+
+      - name: joinchannel3
+        image: hyperledger/fabric-peer:1.4.4
+        #imagePullPolicy: Always
+        command: ["sh", "-c", "peer channel fetch newest -o ${ORDERER_URL} -c ${CHANNEL_NAME} --tls --cafile /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/tls/ca.crt && peer channel join -b ${CHANNEL_NAME}_newest.block "]
+        env:
+        - name: CHANNEL_NAME
+          value: oslab
+        - name: CORE_PEER_NETWORKID
+          value: nid1
+        - name: ORDERER_URL
+          value: orderer0:7050
+        - name: FABRIC_LOGGING_SPEC
+          value: error:error
+        - name: CORE_PEER_ADDRESSAUTODETECT
+          value: "true"
+        - name: CORE_PEER_ID
+          value: peer2
+        - name: CORE_PEER_ADDRESS
+          value: peer2:7051
+        - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+          value: peer2:7051
+        - name: CORE_PEER_LOCALMSPID
+          value: Org2MSP
+        - name: CORE_PEER_MSPCONFIGPATH
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/users/Admin@org2-oslab-com/msp
+        - name: CORE_VM_ENDPOINT
+          value: unix:///host/var/run/docker.sock
+        - name: GODEBUG
+          value: "netdns=go"
+        - name: CORE_PEER_TLS_ENABLED
+          value: "true"
+        - name: CORE_PEER_TLS_KEY_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer2-org2-oslab-com/tls/server.key
+        - name: CORE_PEER_TLS_CERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer2-org2-oslab-com/tls/server.crt
+        - name: CORE_PEER_TLS_ROOTCERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer2-org2-oslab-com/tls/ca.crt
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+
+      - name: joinchannel4
+        image: hyperledger/fabric-peer:1.4.4
+        #imagePullPolicy: Always
+        command: ["sh", "-c", "peer channel fetch newest -o ${ORDERER_URL} -c ${CHANNEL_NAME} --tls --cafile /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/tls/ca.crt && peer channel join -b ${CHANNEL_NAME}_newest.block && sleep 10s"]
+        env:
+        - name: CHANNEL_NAME
+          value: oslab
+        - name: CORE_PEER_NETWORKID
+          value: nid1
+        - name: ORDERER_URL
+          value: orderer0:7050
+        - name: CORE_PEER_ADDRESSAUTODETECT
+          value: "true"
+        - name: CORE_PEER_ID
+          value: peer3
+        - name: CORE_PEER_ADDRESS
+          value: peer3:7051
+        - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+          value: peer3:7051
+        - name: FABRIC_LOGGING_SPEC
+          value: error:error
+        - name: CORE_PEER_LOCALMSPID
+          value: Org2MSP
+        - name: CORE_PEER_MSPCONFIGPATH
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/users/Admin@org2-oslab-com/msp
+        - name: CORE_VM_ENDPOINT
+          value: unix:///host/var/run/docker.sock
+        - name: GODEBUG
+          value: "netdns=go"
+        - name: CORE_PEER_TLS_ENABLED
+          value: "true"
+        - name: CORE_PEER_TLS_KEY_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer3-org2-oslab-com/tls/server.key
+        - name: CORE_PEER_TLS_CERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer3-org2-oslab-com/tls/server.crt
+        - name: CORE_PEER_TLS_ROOTCERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer3-org2-oslab-com/tls/ca.crt
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+

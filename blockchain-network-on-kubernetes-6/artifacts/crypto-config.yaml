@@ -1,0 +1,37 @@
+OrdererOrgs:
+  - Name: Orderer
+    Domain: oslab-com
+    Specs:
+      - Hostname: orderer0
+        CommonName: '{{.Hostname}}-{{.Domain}}'
+      - Hostname: orderer1
+        CommonName: '{{.Hostname}}-{{.Domain}}'
+      - Hostname: orderer2
+        CommonName: '{{.Hostname}}-{{.Domain}}'
+#    Template:
+#      Count: 3
+
+PeerOrgs:
+  - Name: Org1
+    Domain: org1-oslab-com
+    Specs:
+      - Hostname: peer0
+        CommonName: '{{.Hostname}}-{{.Domain}}'
+      - Hostname: peer1
+        CommonName: '{{.Hostname}}-{{.Domain}}'
+#    Template:
+#      Count: 2
+    Users:
+      Count: 1
+  - Name: Org2
+    Domain: org2-oslab-com
+    Specs:
+      - Hostname: peer2
+        CommonName: '{{.Hostname}}-{{.Domain}}'
+      - Hostname: peer3
+        CommonName: '{{.Hostname}}-{{.Domain}}'
+#    Template:
+#      Count: 2
+    Users:
+      Count: 1    
+

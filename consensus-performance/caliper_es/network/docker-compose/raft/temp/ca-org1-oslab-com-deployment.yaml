@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f c.yaml convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: ca-org1-oslab-com
+  name: ca-org1-oslab-com
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: ca-org1-oslab-com
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f c.yaml convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/temp_ca: "true"
+        io.kompose.service: ca-org1-oslab-com
+    spec:
+      containers:
+        - args:
+            - sh
+            - -c
+            - fabric-ca-server start -b admin:adminpw -d
+          env:
+            - name: FABRIC_CA_HOME
+              value: /etc/hyperledger/fabric-ca-server
+            - name: FABRIC_CA_SERVER_CA_CERTFILE
+              value: /etc/hyperledger/fabric-ca-server-config/ca.org1.oslab.com-cert.pem
+            - name: FABRIC_CA_SERVER_CA_KEYFILE
+              value: /etc/hyperledger/fabric-ca-server-config/ca1_key
+            - name: FABRIC_CA_SERVER_CA_NAME
+              value: ca.org1.oslab.com
+            - name: FABRIC_CA_SERVER_TLS_CERTFILE
+              value: /etc/hyperledger/fabric-ca-server-tls/tlsca.org1.oslab.com-cert.pem
+            - name: FABRIC_CA_SERVER_TLS_ENABLED
+              value: "true"
+            - name: FABRIC_CA_SERVER_TLS_KEYFILE
+              value: /etc/hyperledger/fabric-ca-server-tls/ca1_tls_key
+          image: hyperledger/fabric-ca:1.4.4
+          name: ca.org1.oslab.com
+          ports:
+            - containerPort: 7054
+          resources: {}
+          volumeMounts:
+            - mountPath: /etc/hyperledger/fabric-ca-server-config
+              name: ca-org1-oslab-com-claim0
+            - mountPath: /etc/hyperledger/fabric-ca-server-tls
+              name: ca-org1-oslab-com-claim1
+      restartPolicy: Always
+      volumes:
+        - name: ca-org1-oslab-com-claim0
+          persistentVolumeClaim:
+            claimName: ca-org1-oslab-com-claim0
+        - name: ca-org1-oslab-com-claim1
+          persistentVolumeClaim:
+            claimName: ca-org1-oslab-com-claim1
+status: {}

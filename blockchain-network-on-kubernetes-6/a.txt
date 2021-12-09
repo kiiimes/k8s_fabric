@@ -1,0 +1,45 @@
+b36bea80c79d
+d1973198d3b9
+0c30a62e1982
+4471477e26b6
+f46e323cf216
+32b95419753e
+272dc5b64b19
+b71c3faa32a2
+58c343038128
+3598fec974c2
+a1b92dbb3b88
+966ce4fe7805
+b9017e7ff712
+ae3b7001928e
+5b40169ce665
+fbe2293ca52c
+Error response from daemon: Cannot kill container: e2f01927ea9a: Container e2f01927ea9a1dbcf6b3bb6be32db0c22d9e10e9788ed1dc437144f16835c29f is not running
+Error response from daemon: Cannot kill container: dd565bba5954: Container dd565bba5954216f257dc562a05b2b6ee48d0cd235ea0d11235e073985b25c4c is not running
+Error response from daemon: Cannot kill container: 3bd49391c9a6: Container 3bd49391c9a6e9804d855d9681b4b9ae6c07d0196c9b9c4371ffbb1e247f1cc1 is not running
+Error response from daemon: Cannot kill container: b4132296ee90: Container b4132296ee90f31d92bafdab3f17c135dbf315d0884e6cd4bc663a99e8228fc7 is not running
+b36bea80c79d
+d1973198d3b9
+0c30a62e1982
+4471477e26b6
+e2f01927ea9a
+dd565bba5954
+f46e323cf216
+32b95419753e
+272dc5b64b19
+b71c3faa32a2
+58c343038128
+3598fec974c2
+a1b92dbb3b88
+966ce4fe7805
+b9017e7ff712
+3bd49391c9a6
+b4132296ee90
+ae3b7001928e
+5b40169ce665
+fbe2293ca52c
+Error: No such network: raft_ca
+Error: No such network: raft_peer
+Error: No such network: raft_orderer
+: connect: permission denied
+Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Delete "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/networks/raft_orderer": dial unix /var/run/docker.sock: connect: permission denied

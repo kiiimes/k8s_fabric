@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  name: raft_ca
+spec:
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              io.kompose.network/raft_ca: "true"
+  podSelector:
+    matchLabels:
+      io.kompose.network/raft_ca: "true"

@@ -1,0 +1,64 @@
+---
+
+Organizations:
+- &OrdererOrg
+    Name: OrdererMSP
+    ID: OrdererMSP
+    MSPDir: crypto-config/ordererOrganizations/oslab.com/msp
+    AdminPrincipal: Role.MEMBER
+
+- &Org1
+    Name: Org1MSP
+    ID: Org1MSP
+    MSPDir: crypto-config/peerOrganizations/org1.oslab.com/msp
+    AdminPrincipal: Role.ADMIN
+    AnchorPeers:
+    - Host: peer0.org1.oslab.com
+      Port: 7051
+
+- &Org2
+    Name: Org2MSP
+    ID: Org2MSP
+    MSPDir: crypto-config/peerOrganizations/org2.oslab.com/msp
+    AdminPrincipal: Role.ADMIN
+    AnchorPeers:
+    - Host: peer0.org2.oslab.com
+      Port: 7051
+
+Orderer: &OrdererDefaults
+    OrdererType: pbft
+    Addresses:
+    - orderer0.oslab.com:6050
+    - orderer1.oslab.com:6051
+    - orderer2.oslab.com:6052
+    - orderer3.oslab.com:6053
+    # - orderer4.oslab.com:6054
+    
+    BatchTimeout: 20s
+    BatchSize:
+        MaxMessageCount: 200
+        AbsoluteMaxBytes: 500 MB
+        PreferredMaxBytes: 512 KB
+
+Application: &ApplicationDefaults
+    Organizations:
+
+Profiles:
+    OrdererGenesis:
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+            - *OrdererOrg
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                - *Org1
+                - *Org2
+    ChannelConfig:
+        Consortium: SampleConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+            - *Org1
+            - *Org2
+

@@ -1,0 +1,28 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: ca-org2-oslab-com-pv1
+  labels:
+    type: local
+    name: ca-org2-oslab-com-volume1
+spec:
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/home/oslab/go/src/github.com/consensus-performance/caliper_es/network/config/raft/crypto-config/peerOrganizations/org2.oslab.com/tlsca/"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ca-org2-oslab-com-claim1
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Mi
+  selector:
+    matchLabels:
+      name: ca-org2-oslab-com-volume1

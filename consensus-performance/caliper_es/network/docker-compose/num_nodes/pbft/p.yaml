@@ -1,0 +1,191 @@
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+version: '2'
+
+networks:
+    peer:
+        driver: bridge
+        ipam:
+            config:
+            - subnet: 172.53.0.0/24
+              gateway: 172.53.0.1
+
+services:
+    peer0.org1.oslab.com:
+        container_name: peer0.org1.oslab.com
+        image: hyperledger/fabric-peer:1.4.4
+        environment:
+        - FABRIC_LOGGING_SPEC=error:error
+        - CORE_CHAINCODE_LOGGING_LEVEL=ERROR
+        - CORE_CHAINCODE_LOGGING_SHIM=ERROR
+        - CORE_CHAINCODE_EXECUTETIMEOUT=999999
+        - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+        - CORE_PEER_ID=peer0.org1.oslab.com
+        - CORE_PEER_ENDORSER_ENABLED=true
+        - CORE_PEER_LOCALMSPID=Org1MSP
+        - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/msp/
+        - CORE_PEER_ADDRESS=peer0.org1.oslab.com:7051
+        - CORE_PEER_GOSSIP_USELEADERELECTION=true
+        - CORE_PEER_GOSSIP_ORGLEADER=false
+        - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.oslab.com:7051
+        - CORE_PEER_TLS_ENABLED=true
+        - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/msp/peer/tls/server.key
+        - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/msp/peer/tls/server.crt
+        - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/msp/peer/tls/ca.crt
+        - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=pbft_peer
+        working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+        command: peer node start
+        ports:
+        - 7051:7051
+        volumes:
+        - /var/run/:/host/var/run/
+        - ../../../config/num_nodes/pbft/crypto-config/peerOrganizations/org1.oslab.com/peers/peer0.org1.oslab.com/:/etc/hyperledger/msp/peer
+        extra_hosts:
+        - orderer0.oslab.com:172.51.0.2
+        - orderer1.oslab.com:172.51.0.3
+        - orderer2.oslab.com:172.51.0.4
+        - orderer3.oslab.com:172.51.0.5
+        - orderer4.oslab.com:172.56.0.2
+        - orderer5.oslab.com:172.56.0.3
+        - orderer6.oslab.com:172.56.0.4
+
+        networks:
+          peer:
+              ipv4_address: 172.53.0.2
+
+
+    peer1.org1.oslab.com:
+        container_name: peer1.org1.oslab.com
+        image: hyperledger/fabric-peer:1.4.4
+        environment:
+        - FABRIC_LOGGING_SPEC=error:error
+        - CORE_CHAINCODE_LOGGING_LEVEL=ERROR
+        - CORE_CHAINCODE_LOGGING_SHIM=ERROR
+        - CORE_CHAINCODE_EXECUTETIMEOUT=999999
+        - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+        - CORE_PEER_ID=peer1.org1.oslab.com
+        - CORE_PEER_ENDORSER_ENABLED=true
+        - CORE_PEER_LOCALMSPID=Org1MSP
+        - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/msp/
+        - CORE_PEER_ADDRESS=peer1.org1.oslab.com:8051
+        - CORE_PEER_GOSSIP_USELEADERELECTION=true
+        - CORE_PEER_GOSSIP_ORGLEADER=false
+        - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org1.oslab.com:8051
+        - CORE_PEER_TLS_ENABLED=true
+        - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/msp/peer/tls/server.key
+        - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/msp/peer/tls/server.crt
+        - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/msp/peer/tls/ca.crt
+        - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=pbft_peer
+        working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+        command: peer node start
+        ports:
+        - 8051:7051
+        volumes:
+        - /var/run/:/host/var/run/
+        - ../../../config/num_nodes/pbft/crypto-config/peerOrganizations/org1.oslab.com/peers/peer1.org1.oslab.com/:/etc/hyperledger/msp/peer
+        extra_hosts:
+        - orderer0.oslab.com:172.51.0.2
+        - orderer1.oslab.com:172.51.0.3
+        - orderer2.oslab.com:172.51.0.4
+        - orderer3.oslab.com:172.51.0.5
+        - orderer4.oslab.com:172.56.0.2
+        - orderer5.oslab.com:172.56.0.3
+        - orderer6.oslab.com:172.56.0.4
+        networks:
+          peer:
+              ipv4_address: 172.53.0.3
+
+    peer0.org2.oslab.com:
+        container_name: peer0.org2.oslab.com
+        image: hyperledger/fabric-peer:1.4.4
+        environment:
+        - FABRIC_LOGGING_SPEC=error:error
+        - CORE_CHAINCODE_LOGGING_LEVEL=ERROR
+        - CORE_CHAINCODE_LOGGING_SHIM=ERROR
+        - CORE_CHAINCODE_EXECUTETIMEOUT=999999
+        - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+        - CORE_PEER_ID=peer0.org2.oslab.com
+        - CORE_PEER_ENDORSER_ENABLED=true
+        - CORE_PEER_LOCALMSPID=Org2MSP
+        - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/msp/
+        - CORE_PEER_ADDRESS=peer0.org2.oslab.com:9051
+        - CORE_PEER_GOSSIP_USELEADERELECTION=true
+        - CORE_PEER_GOSSIP_ORGLEADER=false
+        - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org2.oslab.com:9051
+        - CORE_PEER_TLS_ENABLED=true
+        - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/msp/peer/tls/server.key
+        - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/msp/peer/tls/server.crt
+        - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/msp/peer/tls/ca.crt
+        - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=pbft_peer
+        working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+        command: peer node start
+        ports:
+        - 9051:7051
+        volumes:
+        - /var/run/:/host/var/run/
+        - ../../../config/num_nodes/pbft/crypto-config/peerOrganizations/org2.oslab.com/peers/peer0.org2.oslab.com/:/etc/hyperledger/msp/peer
+        extra_hosts:
+        - orderer0.oslab.com:172.51.0.2
+        - orderer1.oslab.com:172.51.0.3
+        - orderer2.oslab.com:172.51.0.4
+        - orderer3.oslab.com:172.51.0.5
+        - orderer4.oslab.com:172.56.0.2
+        - orderer5.oslab.com:172.56.0.3
+        - orderer6.oslab.com:172.56.0.4
+        networks:
+          peer:
+              ipv4_address: 172.53.0.4
+        
+    peer1.org2.oslab.com:
+        container_name: peer1.org2.oslab.com
+        image: hyperledger/fabric-peer:1.4.4
+        environment:
+        - FABRIC_LOGGING_SPEC=error:error
+        - CORE_CHAINCODE_LOGGING_LEVEL=ERROR
+        - CORE_CHAINCODE_LOGGING_SHIM=ERROR
+        - CORE_CHAINCODE_EXECUTETIMEOUT=999999
+        - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+        - CORE_PEER_ID=peer1.org2.oslab.com
+        - CORE_PEER_ENDORSER_ENABLED=true
+        - CORE_PEER_LOCALMSPID=Org2MSP
+        - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/msp/
+        - CORE_PEER_ADDRESS=peer1.org2.oslab.com:10051
+        - CORE_PEER_GOSSIP_USELEADERELECTION=true
+        - CORE_PEER_GOSSIP_ORGLEADER=false
+        - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org2.oslab.com:10051
+        - CORE_PEER_TLS_ENABLED=true
+        - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/msp/peer/tls/server.key
+        - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/msp/peer/tls/server.crt
+        - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/msp/peer/tls/ca.crt
+        - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=pbft_peer
+        working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+        command: peer node start
+        ports:
+        - 10051:7051
+        volumes:
+        - /var/run/:/host/var/run/
+        - ../../../config/num_nodes/pbft/crypto-config/peerOrganizations/org2.oslab.com/peers/peer1.org2.oslab.com/:/etc/hyperledger/msp/peer
+        extra_hosts:
+        - orderer0.oslab.com:172.51.0.2
+        - orderer1.oslab.com:172.51.0.3
+        - orderer2.oslab.com:172.51.0.4
+        - orderer3.oslab.com:172.51.0.5
+        - orderer4.oslab.com:172.56.0.2
+        - orderer5.oslab.com:172.56.0.3
+        - orderer6.oslab.com:172.56.0.4
+        networks:
+          peer:
+              ipv4_address: 172.53.0.5
+

@@ -1,0 +1,375 @@
+<!doctype html>
+<html>
+<head>
+    <title>Caliper Report</title>
+    <meta charset="UTF-8"/>
+    <style type="text/css">
+        .left-column {
+            position: fixed;
+            width:20%;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+        }
+        .right-column {
+            margin-left: 22%;
+            width:60%;
+        }
+        .left-column ul,h2 {
+            display: block;
+            margin: 10px;
+            padding: 0;
+            list-style: none;
+        }
+        .left-column ul{
+            border-top: 1px solid #d9d9d9;
+            font-size: 14px;
+        }
+        .left-column li{
+            margin-bottom: 5px;
+            color: #5e6b73;
+        }
+        .left-column h3 {
+            border-left: 5px solid #009a61;
+        }
+        .right-column>div {
+            border-top: 1px solid #d9d9d9;
+        }
+        .right-column table {
+            font-family: verdana,arial,sans-serif;
+            font-size:11px;
+            color:#333333;
+            border-width: 1px;
+            border-color: #666666;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        .right-column th {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #f2f2f2;
+        }
+        .right-column td {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #666666;
+            background-color: #ffffff;
+        }
+        .tag {
+            display: inline-block;
+            margin-bottom: 10px;
+            padding: 5px 10px;
+            background-color: rgba(1,126,102,0.08);
+            font-family: verdana,arial,sans-serif;
+            font-size:11px;
+            color: #017E66;
+            text-align: center;
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+        }
+        pre {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            overflow:auto;
+            max-height:300px;
+            font-size:12px;
+        }
+    </style>
+</head>
+<body>
+
+<main>
+    <div class="left-column">
+        <h2>Caliper Report</h2>
+        <ul>
+            <h3>&nbspBasic information</h3>
+            <li><strong>DLT: &nbsp</strong><span>fabric</span></li>
+            <li><strong>Benchmark: &nbsp</strong><span>smallbank</span></li>
+            <li><strong>Description: &nbsp</strong><span>This is smallbank benchmark for caliper</span></li>
+            <li><strong>Test Rounds: &nbsp</strong><span>1</span></li>
+            <li><a href="#benchmarkInfo">Details</a></li>
+        </ul>
+        <ul>
+            <h3>&nbspBenchmark results</h3>
+            <li><a href="#benchmarksummary">Summary</a></li>
+                <li><a href="#smallOperations">smallOperations</a></li>
+        </ul>
+        <ul>
+            <h3>&nbspSystem Under Test</h3>
+            <li><strong>Version: &nbsp</strong><span>1.4.4</span></li>
+            <li><strong>Size: &nbsp</strong><span>2 Orgs with 2 Peers</span></li>
+            <li><strong>Orderer: &nbsp</strong><span>Raft</span></li>
+            <li><strong>Distribution: &nbsp</strong><span>Multi Host</span></li>
+            <li><strong>StateDB: &nbsp</strong><span>GoLevelDB</span></li>
+            <li><a href="#sutdetails">Details</a></li>
+        </ul>
+    </div>
+
+    <div class="right-column">
+        <div id="benchmarksummary">
+            <table>
+                <h3>Summary</h3>
+                <tr>
+                     <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                </tr>
+
+                <tr>
+                     <td>smallOperations</td> <td>50000</td> <td>0</td> <td>977.8</td> <td>16.65</td> <td>1.19</td> <td>9.65</td> <td>756.1</td>
+                </tr>
+            </table>
+        </div>
+        <div id="smallOperations">
+            <h3>smallOperations</h3>
+            <p></p>
+                <h3>round 0</h3>
+                <strong class="tag">Performance metrics</strong>
+                <table>
+                    <tr>
+                         <th>Name</th> <th>Succ</th> <th>Fail</th> <th>Send Rate (TPS)</th> <th>Max Latency (s)</th> <th>Min Latency (s)</th> <th>Avg Latency (s)</th> <th>Throughput (TPS)</th>
+                    </tr>
+                    <tr>
+                         <td>smallOperations</td> <td>50000</td> <td>0</td> <td>977.8</td> <td>16.65</td> <td>1.19</td> <td>9.65</td> <td>756.1</td>
+                    </tr>
+                </table>
+                <strong class="tag">Resource consumption</strong>
+                <table>
+                    <tr>
+                    <table>
+                        <tr>
+                             <th>Type</th> <th>Name</th> <th>Memory(max)</th> <th>Memory(avg)</th> <th>CPU% (max)</th> <th>CPU% (avg)</th> <th>Traffic In</th> <th>Traffic Out</th> <th>Disc Read</th> <th>Disc Write</th>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>nid1-peer0-smallbank-v0</td> <td>13.2MB</td> <td>12.0MB</td> <td>16.26</td> <td>10.20</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_chaincodeinstantiate_chaincodeinstantiate-nmjjb_default_7be101ac-aff8-4d30-b5c2-a365848b7a69_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_chaincodeinstantiate-nmjjb_default_7be101ac-aff8-4d30-b5c2-a365848b7a69_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_chaincodeinstall4_chaincodeinstall-xqf5d_default_1c78487a-f876-446c-b517-16ddf4663a30_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_chaincodeinstall3_chaincodeinstall-xqf5d_default_1c78487a-f876-446c-b517-16ddf4663a30_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_chaincodeinstall2_chaincodeinstall-xqf5d_default_1c78487a-f876-446c-b517-16ddf4663a30_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_chaincodeinstall1_chaincodeinstall-xqf5d_default_1c78487a-f876-446c-b517-16ddf4663a30_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_chaincodeinstall-xqf5d_default_1c78487a-f876-446c-b517-16ddf4663a30_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_joinchannel4_joinchannel-6ssgw_default_d0ace9e3-5724-416a-97e5-0e45be97f03f_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_joinchannel3_joinchannel-6ssgw_default_d0ace9e3-5724-416a-97e5-0e45be97f03f_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_joinchannel2_joinchannel-6ssgw_default_d0ace9e3-5724-416a-97e5-0e45be97f03f_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_joinchannel1_joinchannel-6ssgw_default_d0ace9e3-5724-416a-97e5-0e45be97f03f_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_joinchannel-6ssgw_default_d0ace9e3-5724-416a-97e5-0e45be97f03f_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_createchannel_createchannel-47dst_default_6c835202-8842-4fa0-a77b-e6c6863fea3e_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_createchanneltx_createchannel-47dst_default_6c835202-8842-4fa0-a77b-e6c6863fea3e_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_createchannel-47dst_default_6c835202-8842-4fa0-a77b-e6c6863fea3e_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_peer1_peer1-f6db84fd8-ctf8z_default_c190ea5d-b62a-41f9-b32b-9c39e359334a_0</td> <td>592.8MB</td> <td>432.2MB</td> <td>210.61</td> <td>168.20</td> <td>0B</td> <td>-</td> <td>0B</td> <td>457.2MB</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_peer2_peer2-7ccdfd5cfd-6km54_default_d0924110-65a2-4956-b6a8-14f07e5aae24_0</td> <td>623.1MB</td> <td>442.2MB</td> <td>218.77</td> <td>167.27</td> <td>0B</td> <td>-</td> <td>0B</td> <td>457.2MB</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_peer1-f6db84fd8-ctf8z_default_c190ea5d-b62a-41f9-b32b-9c39e359334a_0</td> <td>932.0KB</td> <td>932.0KB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_peer2-7ccdfd5cfd-6km54_default_d0924110-65a2-4956-b6a8-14f07e5aae24_0</td> <td>1.3MB</td> <td>1.3MB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_ca1_ca2-7f6f5dc57c-f9fmf_default_34882b83-d157-460f-bc42-62412ff7ede7_0</td> <td>10.0MB</td> <td>10.0MB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_ca2-7f6f5dc57c-f9fmf_default_34882b83-d157-460f-bc42-62412ff7ede7_0</td> <td>1.0MB</td> <td>1.0MB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_peer3_peer3-555b4db885-t5jc5_default_629d5027-cdab-4766-a9bf-e31ea1483a55_0</td> <td>605.7MB</td> <td>436.9MB</td> <td>204.72</td> <td>165.17</td> <td>0B</td> <td>-</td> <td>0B</td> <td>453.7MB</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_peer0_peer0-77b6747f7f-ttc4m_default_74d0c421-9640-40b3-a501-a0448cef6d5d_0</td> <td>629.3MB</td> <td>455.2MB</td> <td>207.84</td> <td>169.33</td> <td>0B</td> <td>-</td> <td>0B</td> <td>452.5MB</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_peer3-555b4db885-t5jc5_default_629d5027-cdab-4766-a9bf-e31ea1483a55_0</td> <td>1.2MB</td> <td>1.2MB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_ca1_ca1-5975fcf74f-t7gxx_default_b7807845-575b-4edc-a3df-556d77860183_0</td> <td>10.1MB</td> <td>10.1MB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_peer0-77b6747f7f-ttc4m_default_74d0c421-9640-40b3-a501-a0448cef6d5d_0</td> <td>1.2MB</td> <td>1.2MB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_ca1-5975fcf74f-t7gxx_default_b7807845-575b-4edc-a3df-556d77860183_0</td> <td>1.1MB</td> <td>1.1MB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_orderer1_orderer1-69c9c9fc4-b6vsw_default_121c859b-931c-4f34-abdc-0996efb98533_0</td> <td>908.6MB</td> <td>722.7MB</td> <td>130.25</td> <td>50.79</td> <td>0B</td> <td>-</td> <td>0B</td> <td>524.6MB</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_orderer0_orderer0-794d4cfffd-54wqz_default_6713749f-1084-4233-855d-ba1fe83c3911_0</td> <td>866.2MB</td> <td>667.4MB</td> <td>85.32</td> <td>49.16</td> <td>0B</td> <td>-</td> <td>104.0KB</td> <td>524.7MB</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_orderer1-69c9c9fc4-b6vsw_default_121c859b-931c-4f34-abdc-0996efb98533_0</td> <td>1.1MB</td> <td>1.1MB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_orderer2_orderer2-5659855dfd-qxmhx_default_6a428daa-e99c-4b80-aa57-97ca8ec4c752_0</td> <td>813.4MB</td> <td>625.7MB</td> <td>79.46</td> <td>43.06</td> <td>0B</td> <td>-</td> <td>0B</td> <td>524.6MB</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_orderer0-794d4cfffd-54wqz_default_6713749f-1084-4233-855d-ba1fe83c3911_0</td> <td>1.1MB</td> <td>1.1MB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_orderer2-5659855dfd-qxmhx_default_6a428daa-e99c-4b80-aa57-97ca8ec4c752_0</td> <td>1008.0KB</td> <td>1008.0KB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_configtxgen_utils-vp9g7_default_94c7235c-9654-4b5d-baff-b915973cc6c2_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_cryptogen_utils-vp9g7_default_94c7235c-9654-4b5d-baff-b915973cc6c2_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_utils-vp9g7_default_94c7235c-9654-4b5d-baff-b915973cc6c2_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_copyartifacts_copyartifacts-wxvn7_default_65ae3477-8b44-4fe6-99fd-ca6e30f1f3b2_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_copyartifacts-wxvn7_default_65ae3477-8b44-4fe6-99fd-ca6e30f1f3b2_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_docker_docker-dind-545d497dc5-ntzbm_default_9518143b-bf19-48ab-bef8-c01c4c40b9f5_0</td> <td>30.1MB</td> <td>30.0MB</td> <td>2.22</td> <td>0.93</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_docker-dind-545d497dc5-ntzbm_default_9518143b-bf19-48ab-bef8-c01c4c40b9f5_0</td> <td>1.3MB</td> <td>1.3MB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_kube-flannel_kube-flannel-ds-vbqtr_kube-system_1185456f-7171-48f3-bb02-f25d4ddfbaaf_1</td> <td>21.5MB</td> <td>21.2MB</td> <td>0.98</td> <td>0.14</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_coredns_coredns-558bd4d5db-vrvwz_kube-system_d9333778-d0c3-4e96-afa9-943763fcdfc7_0</td> <td>16.3MB</td> <td>16.3MB</td> <td>0.90</td> <td>0.27</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_kube-flannel_kube-flannel-ds-vbqtr_kube-system_1185456f-7171-48f3-bb02-f25d4ddfbaaf_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_coredns_coredns-558bd4d5db-7jtvd_kube-system_dd7362d2-de6f-48d9-bf5b-dd8248d0b017_0</td> <td>16.1MB</td> <td>15.9MB</td> <td>1.59</td> <td>0.31</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_install-cni_kube-flannel-ds-vbqtr_kube-system_1185456f-7171-48f3-bb02-f25d4ddfbaaf_0</td> <td>0B</td> <td>0B</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_kube-apiserver_kube-apiserver-baas2_kube-system_9a3f3101dfdd7a77e78411e48320e870_0</td> <td>301.7MB</td> <td>301.7MB</td> <td>21.68</td> <td>7.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_kube-controller-manager_kube-controller-manager-baas2_kube-system_3f76a1c382bb6e2526d2185f57e69e71_0</td> <td>60.9MB</td> <td>60.7MB</td> <td>4.94</td> <td>1.65</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_kube-scheduler_kube-scheduler-baas2_kube-system_dc7a1be3999f9b6ea7c1d1d4d02e53d9_0</td> <td>23.2MB</td> <td>22.5MB</td> <td>1.81</td> <td>0.39</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_etcd_etcd-baas2_kube-system_e851bfc17fbe968d5ce0390cc06dea69_0</td> <td>72.1MB</td> <td>71.9MB</td> <td>4.46</td> <td>1.70</td> <td>0B</td> <td>-</td> <td>0B</td> <td>2.1MB</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_kube-proxy_kube-proxy-jmgw5_kube-system_2ba9c795-6f48-4a4a-aaaa-463efaef75fd_0</td> <td>25.9MB</td> <td>25.9MB</td> <td>0.38</td> <td>0.02</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_kube-scheduler-baas2_kube-system_dc7a1be3999f9b6ea7c1d1d4d02e53d9_0</td> <td>928.0KB</td> <td>928.0KB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_kube-flannel-ds-vbqtr_kube-system_1185456f-7171-48f3-bb02-f25d4ddfbaaf_0</td> <td>1.3MB</td> <td>1.3MB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_coredns-558bd4d5db-7jtvd_kube-system_dd7362d2-de6f-48d9-bf5b-dd8248d0b017_0</td> <td>1.3MB</td> <td>1.3MB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_kube-controller-manager-baas2_kube-system_3f76a1c382bb6e2526d2185f57e69e71_0</td> <td>956.0KB</td> <td>956.0KB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_etcd-baas2_kube-system_e851bfc17fbe968d5ce0390cc06dea69_0</td> <td>1.2MB</td> <td>1.2MB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_kube-proxy-jmgw5_kube-system_2ba9c795-6f48-4a4a-aaaa-463efaef75fd_0</td> <td>1.2MB</td> <td>1.2MB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_coredns-558bd4d5db-vrvwz_kube-system_d9333778-d0c3-4e96-afa9-943763fcdfc7_0</td> <td>940.0KB</td> <td>940.0KB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                        <tr>
+                             <td>Docker</td> <td>k8s_POD_kube-apiserver-baas2_kube-system_9a3f3101dfdd7a77e78411e48320e870_0</td> <td>796.0KB</td> <td>796.0KB</td> <td>0.00</td> <td>0.00</td> <td>0B</td> <td>-</td> <td>0B</td> <td>0B</td>
+                        </tr>
+                    </table>
+                    </tr>
+                </table>
+        </div>
+        <div>
+            <h3>Test Environment</h3>
+            <strong class="tag">benchmark config</strong>
+            <pre id="benchmarkInfo" style="overflow: visible;white-space: pre-wrap;max-height:100%;">{
+  &quot;name&quot;: &quot;smallbank&quot;,
+  &quot;description&quot;: &quot;This is smallbank benchmark for caliper&quot;,
+  &quot;clients&quot;: {
+    &quot;type&quot;: &quot;local&quot;,
+    &quot;number&quot;: 20
+  },
+  &quot;rounds&quot;: [
+    {
+      &quot;label&quot;: &quot;smallOperations&quot;,
+      &quot;txNumber&quot;: [
+        50000
+      ],
+      &quot;rateControl&quot;: [
+        {
+          &quot;type&quot;: &quot;fixed-rate&quot;,
+          &quot;opts&quot;: {
+            &quot;tps&quot;: 1000
+          }
+        }
+      ],
+      &quot;arguments&quot;: {
+        &quot;accounts&quot;: 50000,
+        &quot;txnPerBatch&quot;: 10
+      },
+      &quot;callback&quot;: &quot;benchmarks&#x2F;scenario&#x2F;smallbank&#x2F;smallbankOperations.js&quot;
+    }
+  ]
+}</pre>
+            <strong class="tag">SUT</strong>
+            <pre id="sutdetails">not provided</pre>
+        </div>
+    </div>
+
+
+</main>
+
+</body>
+</html>

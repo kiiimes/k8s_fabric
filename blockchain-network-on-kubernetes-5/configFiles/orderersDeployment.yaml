@@ -1,0 +1,226 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderer0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: orderer0
+  template:
+    metadata:
+      labels:
+        name: orderer0
+    spec:
+      nodeSelector:
+        fabricType: oslab
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      containers:
+      - name: orderer0
+        image: hyperledger/fabric-orderer:1.4.4
+        command: ["sh", "-c", "sleep 5 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done; orderer"]
+        env:
+        - name: ORDERER_CFG_PATH
+          value: /shared/
+        - name: FABRIC_LOGGING_SPEC
+          value: error:error
+        - name: ORDERER_GENERAL_ORDERERTYPE
+          value: etcdraft
+        - name: ORDERER_GENERAL_LISTENADDRESS
+          value: 0.0.0.0
+        - name: ORDERER_GENERAL_GENESISMETHOD
+          value: file
+        - name: ORDERER_GENERAL_GENESISFILE
+          value: /shared/genesis.block
+        - name: ORDERER_GENERAL_LOCALMSPID
+          value: OrdererMSP
+        - name: ORDERER_GENERAL_LOCALMSPDIR
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/msp
+        - name: ORDERER_GENERAL_TLS_ENABLED
+          value: "true"
+        - name: ORDERER_GENERAL_TLS_CERTIFICATE
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/tls/server.crt
+        - name: ORDERER_GENERAL_TLS_PRIVATEKEY
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/tls/server.key
+        - name: ORDERER_GENERAL_TLS_ROOTCAS
+          value: '[/shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/tls/ca.crt]'
+        - name: ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/tls/server.crt
+        - name: ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/tls/server.key
+        - name: GODEBUG
+          value: "netdns=go"
+#        - name: ORDERER_GENERAL_LEDGERTYPE
+#          value: file
+#        - name: ORDERER_FILELEDGER_LOCATION
+#          value: /shared/ledger/orderer0
+#        - name: ORDERER_GENERAL_BATCHTIMEOUT
+#          value: 1s
+#        - name: ORDERER_GENERAL_BATCHSIZE_MAXMESSAGECOUNT
+#          value: "10"
+#        - name: ORDERER_GENERAL_MAXWINDOWSIZE
+#          value: "1000"
+#        - name: ORDERER_GENERAL_LISTENPORT
+#          value: "7050"
+#        - name: ORDERER_GENERAL_LOGLEVEL
+#          value: debug
+#        - name: ORDERER_GENERAL_GENESISPROFILE
+#          value: OrdererGenesis
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderer1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: orderer1
+  template:
+    metadata:
+      labels:
+        name: orderer1
+    spec:
+      nodeSelector:
+        fabricType: orderer
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      containers:
+      - name: orderer1
+        image: hyperledger/fabric-orderer:1.4.4
+        command: ["sh", "-c", "sleep 5 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done; orderer"]
+        env:
+        - name: ORDERER_CFG_PATH
+          value: /shared/
+        - name: FABRIC_LOGGING_SPEC
+          value: error:error
+        - name: ORDERER_GENERAL_ORDERERTYPE
+          value: etcdraft
+        - name: ORDERER_GENERAL_LISTENADDRESS
+          value: 0.0.0.0
+        - name: ORDERER_GENERAL_GENESISMETHOD
+          value: file
+        - name: ORDERER_GENERAL_GENESISFILE
+          value: /shared/genesis.block
+        - name: ORDERER_GENERAL_LOCALMSPID
+          value: OrdererMSP
+        - name: ORDERER_GENERAL_LOCALMSPDIR
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer1-oslab-com/msp
+        - name: ORDERER_GENERAL_TLS_ENABLED
+          value: "true"
+        - name: ORDERER_GENERAL_TLS_CERTIFICATE
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer1-oslab-com/tls/server.crt
+        - name: ORDERER_GENERAL_TLS_PRIVATEKEY
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer1-oslab-com/tls/server.key
+        - name: ORDERER_GENERAL_TLS_ROOTCAS
+          value: '[/shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer1-oslab-com/tls/ca.crt]'
+        - name: ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer1-oslab-com/tls/server.crt
+        - name: ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer1-oslab-com/tls/server.key
+        - name: GODEBUG
+          value: "netdns=go"
+#        - name: ORDERER_GENERAL_LEDGERTYPE
+#          value: file
+#        - name: ORDERER_FILELEDGER_LOCATION
+#          value: /shared/ledger/orderer1
+#        - name: ORDERER_GENERAL_BATCHTIMEOUT
+#          value: 1s
+#        - name: ORDERER_GENERAL_BATCHSIZE_MAXMESSAGECOUNT
+#          value: "10"
+#        - name: ORDERER_GENERAL_MAXWINDOWSIZE
+#          value: "1000"
+#        - name: ORDERER_GENERAL_LISTENPORT
+#          value: "7050"
+#        - name: ORDERER_GENERAL_LOGLEVEL
+#          value: debug
+#        - name: ORDERER_GENERAL_GENESISPROFILE
+#          value: OrdererGenesis
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderer2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: orderer2
+  template:
+    metadata:
+      labels:
+        name: orderer2
+    spec:
+      nodeSelector:
+        fabricType: orderer
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+
+      containers:
+      - name: orderer2
+        image: hyperledger/fabric-orderer:1.4.4
+        command: ["sh", "-c", "sleep 5 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done; orderer"]
+        env:
+        - name: ORDERER_CFG_PATH
+          value: /shared/
+        - name: FABRIC_LOGGING_SPEC
+          value: error:error
+        - name: ORDERER_GENERAL_ORDERERTYPE
+          value: etcdraft
+        - name: ORDERER_GENERAL_LISTENADDRESS
+          value: 0.0.0.0
+        - name: ORDERER_GENERAL_GENESISMETHOD
+          value: file
+        - name: ORDERER_GENERAL_GENESISFILE
+          value: /shared/genesis.block
+        - name: ORDERER_GENERAL_LOCALMSPID
+          value: OrdererMSP
+        - name: ORDERER_GENERAL_LOCALMSPDIR
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer2-oslab-com/msp          
+        - name: ORDERER_GENERAL_TLS_ENABLED
+          value: "true"
+        - name: ORDERER_GENERAL_TLS_CERTIFICATE
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer2-oslab-com/tls/server.crt
+        - name: ORDERER_GENERAL_TLS_PRIVATEKEY
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer2-oslab-com/tls/server.key
+        - name: ORDERER_GENERAL_TLS_ROOTCAS
+          value: '[/shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer2-oslab-com/tls/ca.crt]'
+        - name: ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer2-oslab-com/tls/server.crt
+        - name: ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer2-oslab-com/tls/server.key
+        - name: GODEBUG
+          value: "netdns=go"
+#        - name: ORDERER_GENERAL_LEDGERTYPE
+#          value: file
+#        - name: ORDERER_FILELEDGER_LOCATION
+#          value: /shared/ledger/orderer2
+#        - name: ORDERER_GENERAL_BATCHTIMEOUT
+#          value: 1s
+#        - name: ORDERER_GENERAL_BATCHSIZE_MAXMESSAGECOUNT
+#          value: "10"
+#        - name: ORDERER_GENERAL_MAXWINDOWSIZE
+#          value: "1000"
+#        - name: ORDERER_GENERAL_LISTENPORT
+#          value: "7050"
+#        - name: ORDERER_GENERAL_LOGLEVEL
+#          value: debug
+#        - name: ORDERER_GENERAL_GENESISPROFILE
+#          value: OrdererGenesis
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume

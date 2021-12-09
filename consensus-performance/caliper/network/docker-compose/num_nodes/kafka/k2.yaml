@@ -1,0 +1,226 @@
+version: '2'
+
+networks:
+    kafka:
+        driver: bridge
+        ipam:
+            config:
+            - subnet: 172.59.0.0/24
+              gateway: 172.59.0.1
+
+services:
+    kafka5:
+      container_name: kafka5
+      image: hyperledger/fabric-kafka:latest
+      restart: always
+      environment:
+      - KAFKA_MESSAGE_MAX_BYTES=104857600 # 1 * 1024 * 1024 B
+      - KAFKA_REPLICA_FETCH_MAX_BYTES=104857600 # 1 * 1024 * 1024 B
+      - KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE=false
+      # transaction.state.log.min.isr
+      - KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=3
+      - KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=3
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=3
+      # - KAFKA_transaction.state.log.replication.factor
+      # - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://10.0.0.246
+      # - KAFAK_LISTENERS=PLAINTEXT://10.0.0.246
+      - KAFKA_LOG4J_ROOT_LOGLEVEL=ERROR
+      - KAFKA_TOOLS_LOG4J_LOGLEVEL=ERROR
+      - KAFKA_ADVERTISED_HOST_NAME=172.59.0.2
+      - KAFKA_ADVERTISED_PORT=9092
+      - KAFKA_BROKER_ID=5
+      - KAFKA_MIN_INSYNC_REPLICAS=3
+      - KAFKA_CONTROLLED_SHUTDOWN_MAX_RETRIES=1
+      - KAFKA_CONTROLLED_SHUTDOWN_RETRY_BACKOFF_MS=1000
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=10
+      - KAFKA_REQUEST_TIMEOUT_MS=10000
+      - KAFKA_CONNECTIONS_MAX_IDLE_MS=10000
+      - KAFKA_TRANSACTION_MAX_TIMEOUT_MS=5000
+      - KAFKA_CONTROLLER_SOCKET_TIMEOUT_MS=10000
+      - KAFKA_GROUP_MAX_SESSION_TIMEOUT_MS=10000
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181,zookeeper1:2182,zookeeper2:2183
+      ports:
+      - 9092:9092
+      extra_hosts:
+      - zookeeper0:172.55.0.2
+      - zookeeper1:172.55.0.3
+      - zookeeper2:172.55.0.4
+      - kafka0:172.52.0.2
+      - kafka1:172.52.0.3
+      - kafka2:172.52.0.4
+      - kafka3:172.52.0.5
+      - kafka4:172.52.0.6
+      networks:
+        kafka:
+          ipv4_address: 172.59.0.2
+
+    kafka6:
+      container_name: kafka6
+      image: hyperledger/fabric-kafka:latest
+      restart: always
+      environment:
+      - KAFKA_MESSAGE_MAX_BYTES=104857600 # 1 * 1024 * 1024 B
+      - KAFKA_REPLICA_FETCH_MAX_BYTES=104857600 # 1 * 1024 * 1024 B
+      - KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE=false
+      - KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=3
+      - KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=3
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=3
+      # - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://10.0.0.247
+      # - KAFAK_LISTENERS=PLAINTEXT://10.0.0.247
+      - KAFKA_CONTROLLED_SHUTDOWN_MAX_RETRIES=1
+      - KAFKA_CONTROLLED_SHUTDOWN_RETRY_BACKOFF_MS=1000
+      - KAFKA_LOG4J_ROOT_LOGLEVEL=ERROR
+      - KAFKA_TOOLS_LOG4J_LOGLEVEL=ERROR
+      - KAFKA_ADVERTISED_HOST_NAME=172.59.0.3
+      - KAFKA_ADVERTISED_PORT=9092
+      - KAFKA_BROKER_ID=6
+      - KAFKA_MIN_INSYNC_REPLICAS=3
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=10
+      - KAFKA_REQUEST_TIMEOUT_MS=10000
+      - KAFKA_CONNECTIONS_MAX_IDLE_MS=10000
+      - KAFKA_TRANSACTION_MAX_TIMEOUT_MS=5000
+      - KAFKA_CONTROLLER_SOCKET_TIMEOUT_MS=10000
+      - KAFKA_GROUP_MAX_SESSION_TIMEOUT_MS=10000
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181,zookeeper1:2182,zookeeper2:2183
+      ports:
+      - 9093:9092
+      extra_hosts:
+      - zookeeper0:172.55.0.2
+      - zookeeper1:172.55.0.3
+      - zookeeper2:172.55.0.4
+      - kafka0:172.52.0.2
+      - kafka1:172.52.0.3
+      - kafka2:172.52.0.4
+      - kafka3:172.52.0.5
+      - kafka4:172.52.0.6
+      networks:
+        kafka:
+          ipv4_address: 172.59.0.3
+
+    kafka7:
+      container_name: kafka7
+      image: hyperledger/fabric-kafka:latest
+      restart: always
+      environment:
+      - KAFKA_MESSAGE_MAX_BYTES=104857600 # 1 * 1024 * 1024 B
+      - KAFKA_REPLICA_FETCH_MAX_BYTES=104857600 # 1 * 1024 * 1024 B
+      - KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE=false
+      # - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://10.0.0.247
+      # - KAFAK_LISTENERS=PLAINTEXT://10.0.0.247
+      - KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=3
+      - KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=3
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=3
+      - KAFKA_CONTROLLED_SHUTDOWN_MAX_RETRIES=1
+      - KAFKA_CONTROLLED_SHUTDOWN_RETRY_BACKOFF_MS=1000
+      - KAFKA_LOG4J_ROOT_LOGLEVEL=ERROR
+      - KAFKA_TOOLS_LOG4J_LOGLEVEL=ERROR
+      - KAFKA_ADVERTISED_HOST_NAME=172.59.0.4
+      - KAFKA_ADVERTISED_PORT=9092
+      - KAFKA_BROKER_ID=7
+      - KAFKA_MIN_INSYNC_REPLICAS=3
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=10
+      - KAFKA_REQUEST_TIMEOUT_MS=10000
+      - KAFKA_CONNECTIONS_MAX_IDLE_MS=10000
+      - KAFKA_TRANSACTION_MAX_TIMEOUT_MS=5000
+      - KAFKA_CONTROLLER_SOCKET_TIMEOUT_MS=10000
+      - KAFKA_GROUP_MAX_SESSION_TIMEOUT_MS=10000
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181,zookeeper1:2182,zookeeper2:2183
+      ports:
+      - 9094:9092
+      extra_hosts:
+      - zookeeper0:172.55.0.2
+      - zookeeper1:172.55.0.3
+      - zookeeper2:172.55.0.4
+      - kafka0:172.52.0.2
+      - kafka1:172.52.0.3
+      - kafka2:172.52.0.4
+      - kafka3:172.52.0.5
+      - kafka4:172.52.0.6
+      networks:
+        kafka:
+          ipv4_address: 172.59.0.4
+
+    kafka8:
+      container_name: kafka8
+      image: hyperledger/fabric-kafka:latest
+      restart: always
+      environment:
+      - KAFKA_MESSAGE_MAX_BYTES=104857600 # 1 * 1024 * 1024 B
+      - KAFKA_REPLICA_FETCH_MAX_BYTES=104857600 # 1 * 1024 * 1024 B
+      - KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE=false
+      # - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://10.0.0.247
+      # - KAFAK_LISTENERS=PLAINTEXT://10.0.0.247
+      - KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=3
+      - KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=3
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=3
+      - KAFKA_CONTROLLED_SHUTDOWN_MAX_RETRIES=1
+      - KAFKA_CONTROLLED_SHUTDOWN_RETRY_BACKOFF_MS=1000
+      - KAFKA_LOG4J_ROOT_LOGLEVEL=ERROR
+      - KAFKA_TOOLS_LOG4J_LOGLEVEL=ERROR
+      - KAFKA_ADVERTISED_HOST_NAME=172.59.0.5
+      - KAFKA_ADVERTISED_PORT=9092
+      - KAFKA_BROKER_ID=8
+      - KAFKA_MIN_INSYNC_REPLICAS=3
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=10
+      - KAFKA_REQUEST_TIMEOUT_MS=10000
+      - KAFKA_CONNECTIONS_MAX_IDLE_MS=10000
+      - KAFKA_TRANSACTION_MAX_TIMEOUT_MS=5000
+      - KAFKA_CONTROLLER_SOCKET_TIMEOUT_MS=10000
+      - KAFKA_GROUP_MAX_SESSION_TIMEOUT_MS=10000
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181,zookeeper1:2182,zookeeper2:2183
+      ports:
+      - 9095:9092
+      extra_hosts:
+      - zookeeper0:172.55.0.2
+      - zookeeper1:172.55.0.3
+      - zookeeper2:172.55.0.4
+      - kafka0:172.52.0.2
+      - kafka1:172.52.0.3
+      - kafka2:172.52.0.4
+      - kafka3:172.52.0.5
+      - kafka4:172.52.0.6
+      networks:
+        kafka:
+          ipv4_address: 172.59.0.5
+    kafka9:
+      container_name: kafka9
+      image: hyperledger/fabric-kafka:latest
+      restart: always
+      environment:
+      - KAFKA_MESSAGE_MAX_BYTES=104857600 # 1 * 1024 * 1024 B
+      - KAFKA_REPLICA_FETCH_MAX_BYTES=104857600 # 1 * 1024 * 1024 B
+      - KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE=false
+      # - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://10.0.0.247
+      # - KAFAK_LISTENERS=PLAINTEXT://10.0.0.247
+      - KAFKA_LOG4J_ROOT_LOGLEVEL=ERROR
+      - KAFKA_TOOLS_LOG4J_LOGLEVEL=ERROR
+      - KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=3
+      - KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=3
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=3
+      - KAFKA_CONTROLLED_SHUTDOWN_MAX_RETRIES=1
+      - KAFKA_CONTROLLED_SHUTDOWN_RETRY_BACKOFF_MS=1000
+      - KAFKA_ADVERTISED_HOST_NAME=172.59.0.6
+      - KAFKA_ADVERTISED_PORT=9092
+      - KAFKA_BROKER_ID=9
+      - KAFKA_MIN_INSYNC_REPLICAS=3
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=10
+      - KAFKA_REQUEST_TIMEOUT_MS=10000
+      - KAFKA_TRANSACTION_MAX_TIMEOUT_MS=5000
+      - KAFKA_CONNECTIONS_MAX_IDLE_MS=10000
+      - KAFKA_CONTROLLER_SOCKET_TIMEOUT_MS=10000
+      - KAFKA_GROUP_MAX_SESSION_TIMEOUT_MS=10000
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181,zookeeper1:2182,zookeeper2:2183
+      ports:
+      - 9096:9092
+      extra_hosts:
+      - zookeeper0:172.55.0.2
+      - zookeeper1:172.55.0.3
+      - zookeeper2:172.55.0.4
+      - kafka0:172.52.0.2
+      - kafka1:172.52.0.3
+      - kafka2:172.52.0.4
+      - kafka3:172.52.0.5
+      - kafka4:172.52.0.6
+      networks:
+        kafka:
+          ipv4_address: 172.59.0.6

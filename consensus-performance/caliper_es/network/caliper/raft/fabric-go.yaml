@@ -1,0 +1,186 @@
+name: Fabric
+version: "1.0"
+mutual-tls: false
+
+caliper:
+        blockchain: fabric
+        command:
+                #start: export NETWORK_MODE_NAME=raft_peer; export FABRIC_VERSION=1.4.4; sleep 2s
+                start: export FABRIC_VERSION=1.4.4; sleep 2s
+                end: sleep 1s;
+                
+info: 
+        Version: 1.4.4
+        Size: 2 Orgs with 2 Peers
+        Orderer: Raft
+        Distribution: Multi Host
+        StateDB: GoLevelDB
+
+clients:
+        client0:
+                client:
+                        organization: Org1
+                        credentialStore:
+                                path: /mnt/eskim/tmp/raft-kvs/org1
+                                cryptoStore:
+                                        path: /mnt/eskim/tmp/raft-cvs/org1
+                        clientPrivateKey:
+                                path: /mnt/eskim/tmp/crypto-config/peerOrganizations/org1-oslab-com/users/User1@org1-oslab-com/msp/keystore/key.pem
+                                
+                        clientSignedCert:
+                                path: /mnt/eskim/tmp/crypto-config/peerOrganizations/org1-oslab-com/users/User1@org1-oslab-com/msp/signcerts/User1@org1-oslab-com-cert.pem
+        client1:
+                client:
+                        organization: Org2
+                        credentialStore:
+                                path: /mnt/eskim/tmp/raft-kvs/org2
+                                cryptoStore:
+                                        path: /mnt/eskim/tmp/raft-cvs/org2
+                        clientPrivateKey:
+                                path: /mnt/eskim/tmp/crypto-config/peerOrganizations/org2-oslab-com/users/User1@org2-oslab-com/msp/keystore/key.pem
+                                
+                        clientSignedCert:
+                                path: /mnt/eskim/tmp/crypto-config/peerOrganizations/org2-oslab-com/users/User1@org2-oslab-com/msp/signcerts/User1@org2-oslab-com-cert.pem
+
+
+channels:
+        oslab:
+                configBinary: /mnt/eskim/tmp/channel.tx
+                created: false
+                orderers: 
+                - orderer0
+                - orderer1
+                - orderer2
+                
+                peers:
+                        peer0:
+                                eventSource: true
+                        peer1:
+                                eventSource: true
+                        peer2:
+                                eventSource: true
+                        peer3:
+                                eventSource: true
+                chaincodes:
+                - id: smallbank
+                  version: v0
+                  language: golang
+                  path: fabric/scenario/smallbank/go
+                # - id: simple
+                #   version: v0
+                #   language: golang
+                #   path: fabric/scenario/simple/go
+                # - id: marbles
+                #   version: v0
+                #   language: golang
+                #   path: fabric/scenario/marbles/go
+                                
+organizations:
+        Org1:
+                mspid: Org1MSP
+                peers:
+                - peer0
+                - peer1
+                certificateAuthorities:
+                - CA1
+                adminPrivateKey:
+                        path: /mnt/eskim/tmp/crypto-config/peerOrganizations/org1-oslab-com/users/Admin@org1-oslab-com/msp/keystore/key.pem
+                signedCert:
+                        path: /mnt/eskim/tmp/crypto-config/peerOrganizations/org1-oslab-com/users/Admin@org1-oslab-com/msp/signcerts/Admin@org1-oslab-com-cert.pem
+
+        Org2:
+                mspid: Org2MSP
+                peers:
+                - peer2
+                - peer3
+                certificateAuthorities:
+                - CA2
+                adminPrivateKey:
+                        path: /mnt/eskim/tmp/crypto-config/peerOrganizations/org2-oslab-com/users/Admin@org2-oslab-com/msp/keystore/key.pem
+                signedCert:
+                        path: /mnt/eskim/tmp/crypto-config/peerOrganizations/org2-oslab-com/users/Admin@org2-oslab-com/msp/signcerts/Admin@org2-oslab-com-cert.pem
+
+orderers:
+        orderer0:
+                url: grpcs://10.0.0.25:31010
+                grpcOptions:
+                        ssl-target-name-override: orderer0
+                        grpc.keepalive_time_ms: 60000
+                tlsCACerts:
+                        path: /mnt/eskim/tmp/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/msp/tlscacerts/tlsca.oslab-com-cert.pem
+        
+        orderer1:
+                url: grpcs://10.0.0.25:31110
+                grpcOptions:
+                        ssl-target-name-override: orderer1
+                        grpc.keepalive_time_ms: 60000
+                tlsCACerts:
+                        path: /mnt/eskim/tmp/crypto-config/ordererOrganizations/oslab-com/orderers/orderer1-oslab-com/msp/tlscacerts/tlsca.oslab-com-cert.pem
+
+        orderer2:
+                url: grpcs://10.0.0.25:31210
+                grpcOptions:
+                        ssl-target-name-override: orderer2
+                        grpc.keepalive_time_ms: 60000
+                tlsCACerts:
+                        path: /mnt/eskim/tmp/crypto-config/ordererOrganizations/oslab-com/orderers/orderer2-oslab-com/msp/tlscacerts/tlsca.oslab-com-cert.pem
+
+peers:
+        peer0:
+                url: grpcs://10.0.0.12:30110
+                grpcOptions:
+                        ssl-target-name-override: peer0
+                        grpc.keepalive_time_ms: 60000
+                        # grpc.keepalive_time_ms: 300s
+                tlsCACerts:
+                        path: /mnt/eskim/tmp/crypto-config/peerOrganizations/org1-oslab-com/peers/peer0-org1-oslab-com/msp/tlscacerts/tlsca.org1-oslab-com-cert.pem
+        
+        peer1:
+                url: grpcs://10.0.0.12:30210
+                grpcOptions:
+                        ssl-target-name-override: peer1
+                        grpc.keepalive_time_ms: 60000
+                        # grpc.keepalive_time_ms: 300s
+                tlsCACerts:
+                        path: /mnt/eskim/tmp/crypto-config/peerOrganizations/org1-oslab-com/peers/peer1-org1-oslab-com/msp/tlscacerts/tlsca.org1-oslab-com-cert.pem
+
+        peer2:
+                url: grpcs://10.0.0.12:30310
+                grpcOptions:
+                        ssl-target-name-override: peer2
+                        grpc.keepalive_time_ms: 60000
+                        # grpc.keepalive_time_ms: 300s
+                tlsCACerts:
+                        path: /mnt/eskim/tmp/crypto-config/peerOrganizations/org2-oslab-com/peers/peer2-org2-oslab-com/msp/tlscacerts/tlsca.org2-oslab-com-cert.pem
+
+        peer3:
+                url: grpcs://10.0.0.12:30410
+                grpcOptions:
+                        ssl-target-name-override: peer3
+                        grpc.keepalive_time_ms: 60000
+                        # grpc.keepalive_time_ms: 300s
+                tlsCACerts:
+                        path: /mnt/eskim/tmp/crypto-config/peerOrganizations/org2-oslab-com/peers/peer3-org2-oslab-com/msp/tlscacerts/tlsca.org2-oslab-com-cert.pem
+
+certificateAuthorities:
+        CA1:
+                url: https://10.0.0.15:30054
+                httpOptions:
+                        verify: false
+                tlsCACerts:
+                        path: /mnt/eskim/tmp/crypto-config/peerOrganizations/org1-oslab-com/tlsca/tlsca.org1-oslab-com-cert.pem
+                        # path: networks/fabric/config_raft/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+                registrar:
+                - enrollId: admin    
+                  enrollSecret: adminpw
+
+        CA2:
+                url: https://10.0.0.15:30064
+                httpOptions:
+                        verify: false
+                tlsCACerts:
+                        path: /mnt/eskim/tmp/crypto-config/peerOrganizations/org2-oslab-com/tlsca/tlsca.org2-oslab-com-cert.pem
+                        # path: networks/fabric/config_raft/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+                registrar:
+                - enrollId: admin    
+                  enrollSecret: adminpw

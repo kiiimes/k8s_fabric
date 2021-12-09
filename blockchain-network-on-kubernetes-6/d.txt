@@ -1,0 +1,2 @@
+[sudo] password for server3: [ perf record: Woken up 375 times to write data ]
+[ perf record: Captured and wrote 762.293 MB perf.data (6891069 samples) ]

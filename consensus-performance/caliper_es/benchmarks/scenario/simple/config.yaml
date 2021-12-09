@@ -1,0 +1,37 @@
+simpleArgs: &simple-args
+  initialMoney: 10000
+  moneyToTransfer: 100
+  numberOfAccounts: &number-of-accounts 1000
+
+test:
+  name: simple
+  clients:
+    type: local
+    number: 20
+  rounds:
+    - label: open
+      txNumber:
+      - 30000
+      rateControl:
+      - type: fixed-rate
+        opts:
+          tps: 1000
+      arguments:
+        money: 10000
+      callback: benchmarks/scenario/simple/open.js    
+    - label: transfer
+      txNumber: 
+      - 30000
+      rateControl:
+      - type: fixed-rate
+        opts:
+          tps: 1000
+      arguments:
+        money: 100
+      callback: benchmarks/scenario/simple/transfer.js
+monitor:
+  type: docker
+  docker:
+    name:
+    - all
+  interval: 1

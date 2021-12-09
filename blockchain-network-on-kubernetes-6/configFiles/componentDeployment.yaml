@@ -1,0 +1,848 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderer0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: orderer0
+  template:
+    metadata:
+      labels:
+        name: orderer0
+    spec:
+      nodeSelector:
+        fabricType: orderer
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      containers:
+      - name: orderer0
+        image: hyperledger/fabric-orderer:1.4.4
+        resources:
+          limits:
+            cpu: "2000m"
+          requests:
+            cpu: "1"
+        command: ["sh", "-c", "sleep 5 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done; orderer"]
+        env:
+        - name: ORDERER_CFG_PATH
+          value: /shared/
+        - name: FABRIC_LOGGING_SPEC
+          value: error:error
+        - name: ORDERER_GENERAL_ORDERERTYPE
+          value: etcdraft
+        - name: ORDERER_GENERAL_LISTENADDRESS
+          value: 0.0.0.0
+        - name: ORDERER_GENERAL_GENESISMETHOD
+          value: file
+        - name: ORDERER_GENERAL_GENESISFILE
+          value: /shared/genesis.block
+        - name: ORDERER_GENERAL_LOCALMSPID
+          value: OrdererMSP
+        - name: ORDERER_GENERAL_LOCALMSPDIR
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/msp
+        - name: ORDERER_GENERAL_TLS_ENABLED
+          value: "true"
+        - name: ORDERER_GENERAL_TLS_CERTIFICATE
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/tls/server.crt
+        - name: ORDERER_GENERAL_TLS_PRIVATEKEY
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/tls/server.key
+        - name: ORDERER_GENERAL_TLS_ROOTCAS
+          value: '[/shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/tls/ca.crt]'
+        - name: ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/tls/server.crt
+        - name: ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer0-oslab-com/tls/server.key
+        - name: GODEBUG
+          value: "netdns=go"
+#        - name: ORDERER_GENERAL_LEDGERTYPE
+#          value: file
+#        - name: ORDERER_FILELEDGER_LOCATION
+#          value: /shared/ledger/orderer0
+#        - name: ORDERER_GENERAL_BATCHTIMEOUT
+#          value: 1s
+#        - name: ORDERER_GENERAL_BATCHSIZE_MAXMESSAGECOUNT
+#          value: "10"
+#        - name: ORDERER_GENERAL_MAXWINDOWSIZE
+#          value: "1000"
+#        - name: ORDERER_GENERAL_LISTENPORT
+#          value: "7050"
+#        - name: ORDERER_GENERAL_LOGLEVEL
+#          value: debug
+#        - name: ORDERER_GENERAL_GENESISPROFILE
+#          value: OrdererGenesis
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderer1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: orderer1
+  template:
+    metadata:
+      labels:
+        name: orderer1
+    spec:
+      nodeSelector:
+        fabricType: orderer
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      containers:
+      - name: orderer1
+        image: hyperledger/fabric-orderer:1.4.4
+        resources:
+          limits:
+            cpu: "2000m"
+          requests:
+            cpu: "1"
+        command: ["sh", "-c", "sleep 5 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done; orderer"]
+        env:
+        - name: ORDERER_CFG_PATH
+          value: /shared/
+        - name: FABRIC_LOGGING_SPEC
+          value: error:error
+        - name: ORDERER_GENERAL_ORDERERTYPE
+          value: etcdraft
+        - name: ORDERER_GENERAL_LISTENADDRESS
+          value: 0.0.0.0
+        - name: ORDERER_GENERAL_GENESISMETHOD
+          value: file
+        - name: ORDERER_GENERAL_GENESISFILE
+          value: /shared/genesis.block
+        - name: ORDERER_GENERAL_LOCALMSPID
+          value: OrdererMSP
+        - name: ORDERER_GENERAL_LOCALMSPDIR
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer1-oslab-com/msp
+        - name: ORDERER_GENERAL_TLS_ENABLED
+          value: "true"
+        - name: ORDERER_GENERAL_TLS_CERTIFICATE
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer1-oslab-com/tls/server.crt
+        - name: ORDERER_GENERAL_TLS_PRIVATEKEY
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer1-oslab-com/tls/server.key
+        - name: ORDERER_GENERAL_TLS_ROOTCAS
+          value: '[/shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer1-oslab-com/tls/ca.crt]'
+        - name: ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer1-oslab-com/tls/server.crt
+        - name: ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer1-oslab-com/tls/server.key
+        - name: GODEBUG
+          value: "netdns=go"
+#        - name: ORDERER_GENERAL_LEDGERTYPE
+#          value: file
+#        - name: ORDERER_FILELEDGER_LOCATION
+#          value: /shared/ledger/orderer1
+#        - name: ORDERER_GENERAL_BATCHTIMEOUT
+#          value: 1s
+#        - name: ORDERER_GENERAL_BATCHSIZE_MAXMESSAGECOUNT
+#          value: "10"
+#        - name: ORDERER_GENERAL_MAXWINDOWSIZE
+#          value: "1000"
+#        - name: ORDERER_GENERAL_LISTENPORT
+#          value: "7050"
+#        - name: ORDERER_GENERAL_LOGLEVEL
+#          value: debug
+#        - name: ORDERER_GENERAL_GENESISPROFILE
+#          value: OrdererGenesis
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderer2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: orderer2
+  template:
+    metadata:
+      labels:
+        name: orderer2
+    spec:
+      nodeSelector:
+        fabricType: orderer
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+
+      containers:
+      - name: orderer2
+        image: hyperledger/fabric-orderer:1.4.4
+        resources:
+          limits:
+            cpu: "2000m"
+          requests:
+            cpu: "1"
+        command: ["sh", "-c", "sleep 5 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done; orderer"]
+        env:
+        - name: ORDERER_CFG_PATH
+          value: /shared/
+        - name: FABRIC_LOGGING_SPEC
+          value: error:error
+        - name: ORDERER_GENERAL_ORDERERTYPE
+          value: etcdraft
+        - name: ORDERER_GENERAL_LISTENADDRESS
+          value: 0.0.0.0
+        - name: ORDERER_GENERAL_GENESISMETHOD
+          value: file
+        - name: ORDERER_GENERAL_GENESISFILE
+          value: /shared/genesis.block
+        - name: ORDERER_GENERAL_LOCALMSPID
+          value: OrdererMSP
+        - name: ORDERER_GENERAL_LOCALMSPDIR
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer2-oslab-com/msp          
+        - name: ORDERER_GENERAL_TLS_ENABLED
+          value: "true"
+        - name: ORDERER_GENERAL_TLS_CERTIFICATE
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer2-oslab-com/tls/server.crt
+        - name: ORDERER_GENERAL_TLS_PRIVATEKEY
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer2-oslab-com/tls/server.key
+        - name: ORDERER_GENERAL_TLS_ROOTCAS
+          value: '[/shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer2-oslab-com/tls/ca.crt]'
+        - name: ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer2-oslab-com/tls/server.crt
+        - name: ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY
+          value: /shared/crypto-config/ordererOrganizations/oslab-com/orderers/orderer2-oslab-com/tls/server.key
+        - name: GODEBUG
+          value: "netdns=go"
+#        - name: ORDERER_GENERAL_LEDGERTYPE
+#          value: file
+#        - name: ORDERER_FILELEDGER_LOCATION
+#          value: /shared/ledger/orderer2
+#        - name: ORDERER_GENERAL_BATCHTIMEOUT
+#          value: 1s
+#        - name: ORDERER_GENERAL_BATCHSIZE_MAXMESSAGECOUNT
+#          value: "10"
+#        - name: ORDERER_GENERAL_MAXWINDOWSIZE
+#          value: "1000"
+#        - name: ORDERER_GENERAL_LISTENPORT
+#          value: "7050"
+#        - name: ORDERER_GENERAL_LOGLEVEL
+#          value: debug
+#        - name: ORDERER_GENERAL_GENESISPROFILE
+#          value: OrdererGenesis
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ca1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: ca1
+  template:
+    metadata:
+      labels:
+        name: ca1
+    spec:
+      nodeSelector:
+        fabricType: ca
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      containers:
+      - name: ca1
+        image: hyperledger/fabric-ca:1.4.4
+        resources:
+          limits:
+            cpu: "2000m"
+          requests:
+            cpu: "1"
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done; fabric-ca-server start -b admin:adminpw -d"]
+        env:
+        - name: FABRIC_CA_SERVER_CA_NAME
+          value: "CA1"
+        - name: FABRIC_CA_HOME
+          value: /etc/hyperledger/fabric-ca-server
+        - name: FABRIC_CA_SERVER_CA_CERTFILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/ca/ca.org1-oslab-com-cert.pem
+        - name: FABRIC_CA_SERVER_CA_KEYFILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/ca/key.pem
+        - name: FABRIC_CA_SERVER_TLS_ENABLED
+          value: "true"
+        - name: FABRIC_CA_SERVER_TLS_CERTFILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/tlsca/tlsca.org1-oslab-com-cert.pem
+        - name: FABRIC_CA_SERVER_TLS_KEYFILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/tlsca/key.pem
+        - name: GODEBUG
+          value: "netdns=go"
+        #- name: FABRIC_CA_SERVER_DEBUG
+        #  value: "true"
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ca2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: ca2
+  template:
+    metadata:
+      labels:
+        name: ca2
+    spec:
+      nodeSelector:
+        fabricType: ca
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      containers:
+      - name: ca1
+        image: hyperledger/fabric-ca:1.4.4
+        resources:
+          limits:
+            cpu: "2000m"
+          requests:
+            cpu: "1"
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done; fabric-ca-server start -b admin:adminpw -d"]
+        env:
+        - name: FABRIC_CA_SERVER_CA_NAME
+          value: "CA2"
+        - name: FABRIC_CA_HOME
+          value: /etc/hyperledger/fabric-ca-server
+        - name: FABRIC_CA_SERVER_CA_CERTFILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/ca/ca.org2-oslab-com-cert.pem
+        - name: FABRIC_CA_SERVER_CA_KEYFILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/ca/key.pem
+        - name: FABRIC_CA_SERVER_TLS_ENABLED
+          value: "true"
+        - name: FABRIC_CA_SERVER_TLS_CERTFILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/tlsca/tlsca.org2-oslab-com-cert.pem
+        - name: FABRIC_CA_SERVER_TLS_KEYFILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/tlsca/key.pem
+        - name: GODEBUG
+          value: "netdns=go"
+        #- name: FABRIC_CA_SERVER_DEBUG
+        #  value: "true"
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: peer0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: peer0
+  template:
+    metadata:
+      labels:
+        name: peer0
+    spec:
+      nodeSelector:
+        fabricType: peer
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      - name: dockersocket
+        hostPath:
+          path: /var/run/docker.sock
+
+      containers:
+      - name: peer0
+        image: hyperledger/fabric-peer:1.4.4
+        resources:
+          limits:
+            cpu: "2000m"
+          requests:
+            cpu: "1"
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done; peer node start"]
+        env:
+        - name: FABRIC_LOGGING_SPEC
+          value: error:error
+        - name: CORE_CHAINCODE_LOGGING_LEVEL
+          value: ERROR
+        - name: CORE_CHAINCODE_LOGGING_SHIM
+          value: ERROR
+        - name: CORE_CHAINCODE_EXECUTETIMEOUT
+          value: "999999"
+        - name: CORE_VM_ENDPOINT
+          value: unix:///host/var/run/docker.sock
+        - name: CORE_PEER_ID
+          value: peer0
+        - name: CORE_PEER_ENDORSER_ENABLED
+          value: "true"
+        - name: CORE_PEER_LOCALMSPID
+          value: Org1MSP
+        - name: CORE_PEER_MSPCONFIGPATH
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer0-org1-oslab-com/msp/
+        - name: CORE_PEER_ADDRESS
+          value: peer0:7051
+        - name: CORE_PEER_GOSSIP_USELEADERELECTION
+          value: "true"
+        - name: CORE_PEER_GOSSIP_ORGLEADER
+          value: "false"
+        - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+          value: peer0:7051
+        - name: CORE_PEER_TLS_ENABLED
+          value: "true"
+        - name: CORE_PEER_TLS_CERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer0-org1-oslab-com/tls/server.crt
+        - name: CORE_PEER_TLS_KEY_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer0-org1-oslab-com/tls/server.key
+        - name: CORE_PEER_TLS_ROOTCERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer0-org1-oslab-com/tls/ca.crt
+        - name: CORE_LEDGER_STATE_STATEDATABASE
+          value: goleveldb
+        - name: GODEBUG
+          value: "netdns=go"
+        - name: CORE_PEER_ADDRESSAUTODETECT
+          value: "true"
+        - name: CORE_PEER_NETWORKID
+          value: nid1
+
+#        - name: CORE_PEER_LISTENADDRESS
+#          value: 0.0.0.0:7051
+#        - name: CORE_PEER_EVENTS_ADDRESS
+#          value: 0.0.0.0:7052
+#        - name: CORE_PEER_GOSSIP_BOOTSTRAP
+#          value: peer1:7051
+#        - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
+#          value: "true"
+#        - name: CORE_PEER_COMMITTER_ENABLED
+#          value: "true"
+#        - name: CORE_PEER_PROFILE_ENABLED
+#          value: "true"
+#        - name: FABRIC_LOGGING_SPEC
+#          value: debug
+#        - name: CORE_LOGGING_PEER
+#          value: debug
+#        - name: CORE_LOGGING_CAUTHDSL
+#          value: debug
+#        - name: CORE_LOGGING_GOSSIP
+#          value: debug
+#        - name: CORE_LOGGING_LEDGER
+#          value: debug
+#        - name: CORE_LOGGING_MSP
+#          value: info
+#        - name: CORE_LOGGING_POLICIES
+#          value: debug
+#        - name: CORE_LOGGING_GRPC
+#          value: debug
+#        - name: FABRIC_CFG_PATH
+#          value: /etc/hyperledger/fabric/
+#        - name: CORE_VM_DOCKER_ATTACHSTDOUT
+#          value: "true"
+#        - name: CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE
+#          value: raft_peer
+#        - name: ORDERER_URL
+#          value: orderer0:7050
+#        - name: ORDERER_URL
+#          value: orderer1:7050
+#        - name: ORDERER_URL
+#          value: orderer2:7050
+
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+        - mountPath: /host/var/run/docker.sock
+          name: dockersocket
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: peer1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: peer1
+  template:
+    metadata:
+      labels:
+        name: peer1
+    spec:
+      nodeSelector:
+        fabricType: peer
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      - name: dockersocket
+        hostPath:
+          path: /var/run/docker.sock
+
+      containers:
+      - name: peer1
+        image: hyperledger/fabric-peer:1.4.4
+        resources:
+          limits:
+            cpu: "2000m"
+          requests:
+            cpu: "1"
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done;  peer node start"]
+        env:
+        - name: FABRIC_LOGGING_SPEC
+          value: error:error
+        - name: CORE_CHAINCODE_LOGGING_LEVEL
+          value: ERROR
+        - name: CORE_CHAINCODE_LOGGING_SHIM
+          value: ERROR
+        - name: CORE_CHAINCODE_EXECUTETIMEOUT
+          value: "999999"
+        - name: CORE_VM_ENDPOINT
+          value: unix:///host/var/run/docker.sock
+        - name: CORE_PEER_ID
+          value: peer1
+        - name: CORE_PEER_ENDORSER_ENABLED
+          value: "true"
+        - name: CORE_PEER_LOCALMSPID
+          value: Org1MSP
+        - name: CORE_PEER_MSPCONFIGPATH
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer1-org1-oslab-com/msp/
+        - name: CORE_PEER_ADDRESS
+          value: peer1:7051
+        - name: CORE_PEER_GOSSIP_USELEADERELECTION
+          value: "true"
+        - name: CORE_PEER_GOSSIP_ORGLEADER
+          value: "false"
+        - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+          value: peer1:7051
+        - name: CORE_PEER_TLS_ENABLED
+          value: "true"
+        - name: CORE_PEER_TLS_CERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer1-org1-oslab-com/tls/server.crt
+        - name: CORE_PEER_TLS_KEY_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer1-org1-oslab-com/tls/server.key
+        - name: CORE_PEER_TLS_ROOTCERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org1-oslab-com/peers/peer1-org1-oslab-com/tls/ca.crt 
+        - name: CORE_LEDGER_STATE_STATEDATABASE
+          value: goleveldb
+        - name: GODEBUG
+          value: "netdns=go"
+        - name: CORE_PEER_ADDRESSAUTODETECT
+          value: "true"
+        - name: CORE_PEER_NETWORKID
+          value: nid1
+
+#        - name: CORE_PEER_LISTENADDRESS
+#          value: 0.0.0.0:7051
+#        - name: CORE_PEER_EVENTS_ADDRESS
+#          value: 0.0.0.0:7052
+#        - name: CORE_PEER_GOSSIP_BOOTSTRAP
+#          value: peer0:7051
+#        - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
+#          value: "true"
+#        - name: CORE_PEER_COMMITTER_ENABLED
+#          value: "true"
+#        - name: CORE_PEER_PROFILE_ENABLED
+#          value: "true"
+#        - name: FABRIC_LOGGING_SPEC
+#          value: debug
+#        - name: CORE_LOGGING_PEER
+#          value: debug
+#        - name: CORE_LOGGING_CAUTHDSL
+#          value: debug
+#        - name: CORE_LOGGING_GOSSIP
+#          value: debug
+#        - name: CORE_LOGGING_LEDGER
+#          value: debug
+#        - name: CORE_LOGGING_MSP
+#          value: debug
+#        - name: CORE_LOGGING_POLICIES
+#          value: debug
+#        - name: CORE_LOGGING_GRPC
+#          value: debug
+#        - name: FABRIC_LOGGING_GRPC
+#          value: error:error
+#        - name: FABRIC_CFG_PATH
+#          value: /etc/hyperledger/fabric/
+#        - name: CORE_VM_DOCKER_ATTACHSTDOUT
+#          value: "true"
+#        - name: ORDERER_URL
+#          value: orderer0:7050
+#        - name: ORDERER_URL
+#          value: orderer1:7050
+#        - name: ORDERER_URL
+#          value: orderer2:7050
+#        - name: CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE
+#          value: raft_peer
+
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+        - mountPath: /host/var/run/docker.sock
+          name: dockersocket
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: peer2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: peer2
+  template:
+    metadata:
+      labels:
+        name: peer2
+    spec:
+      nodeSelector:
+        fabricType: peer
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      - name: dockersocket
+        hostPath:
+          path: /var/run/docker.sock
+
+      containers:
+      - name: peer2
+        image: hyperledger/fabric-peer:1.4.4
+        resources:
+          limits:
+            cpu: "2000m"
+          requests:
+            cpu: "1"
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done;  peer node start"]
+        env:
+        - name: FABRIC_LOGGING_SPEC
+          value: error:error
+        - name: CORE_CHAINCODE_LOGGING_LEVEL
+          value: ERROR
+        - name: CORE_CHAINCODE_LOGGING_SHIM
+          value: ERROR
+        - name: CORE_CHAINCODE_EXECUTETIMEOUT
+          value: "999999"
+        - name: CORE_VM_ENDPOINT
+          value: unix:///host/var/run/docker.sock
+        - name: CORE_PEER_ID
+          value: peer2
+        - name: CORE_PEER_ENDORSER_ENABLED
+          value: "true"
+        - name: CORE_PEER_LOCALMSPID
+          value: Org2MSP
+        - name: CORE_PEER_MSPCONFIGPATH
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer2-org2-oslab-com/msp/
+        - name: CORE_PEER_ADDRESS
+          value: peer2:7051
+        - name: CORE_PEER_GOSSIP_USELEADERELECTION
+          value: "true"
+        - name: CORE_PEER_GOSSIP_ORGLEADER
+          value: "false"
+        - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+          value: peer2:7051
+        - name: CORE_PEER_TLS_ENABLED
+          value: "true"
+        - name: CORE_PEER_TLS_CERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer2-org2-oslab-com/tls/server.crt
+        - name: CORE_PEER_TLS_KEY_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer2-org2-oslab-com/tls/server.key
+        - name: CORE_PEER_TLS_ROOTCERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer2-org2-oslab-com/tls/ca.crt
+        - name: CORE_LEDGER_STATE_STATEDATABASE
+          value: goleveldb
+        - name: GODEBUG
+          value: "netdns=go"
+        - name: CORE_PEER_ADDRESSAUTODETECT
+          value: "true"
+        - name: CORE_PEER_NETWORKID
+          value: nid1
+
+#        - name: CORE_PEER_LISTENADDRESS
+#          value: 0.0.0.0:7051
+#        - name: CORE_PEER_EVENTS_ADDRESS
+#          value: 0.0.0.0:7052
+#        - name: CORE_PEER_GOSSIP_BOOTSTRAP
+#          value: peer3:7051
+#        - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
+#          value: "true"
+#        - name: CORE_PEER_COMMITTER_ENABLED
+#          value: "true"
+#        - name: CORE_PEER_PROFILE_ENABLED
+#          value: "true"
+#        - name: FABRIC_LOGGING_SPEC
+#          value: debug
+#        - name: CORE_LOGGING_PEER
+#          value: debug
+#        - name: CORE_LOGGING_CAUTHDSL
+#          value: debug
+#        - name: CORE_LOGGING_GOSSIP
+#          value: debug
+#        - name: CORE_LOGGING_LEDGER
+#          value: debug
+#        - name: CORE_LOGGING_MSP
+#          value: debug
+#        - name: CORE_LOGGING_POLICIES
+#          value: debug
+#        - name: CORE_LOGGING_GRPC
+#          value: debug
+#        - name: FABRIC_LOGGING_SPEC
+#          value: error:error
+#        - name: FABRIC_CFG_PATH
+#          value: /etc/hyperledger/fabric/
+#        - name: CORE_VM_DOCKER_ATTACHSTDOUT
+#          value: "true"
+#        - name: CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE
+#          value: raft_peer
+#        - name: ORDERER_URL
+#          value: orderer0:7050
+#        - name: ORDERER_URL
+#          value: orderer1:7050
+#        - name: ORDERER_URL
+#          value: orderer2:7050
+ 
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+        - mountPath: /host/var/run/docker.sock
+          name: dockersocket
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: peer3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: peer3
+  template:
+    metadata:
+      labels:
+        name: peer3
+    spec:
+      nodeSelector:
+        fabricType: peer
+      volumes:
+      - name: sharedvolume
+        persistentVolumeClaim:
+          claimName: shared-pvc
+      - name: dockersocket
+        hostPath:
+          path: /var/run/docker.sock
+
+      containers:
+      - name: peer3
+        image: hyperledger/fabric-peer:1.4.4
+        resources:
+          limits:
+            cpu: "2000m"
+          requests:
+            cpu: "1"
+        command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done;  peer node start"]
+        env:
+        - name: FABRIC_LOGGING_SPEC
+          value: error:error
+        - name: CORE_CHAINCODE_LOGGING_LEVEL
+          value: ERROR
+        - name: CORE_CHAINCODE_LOGGING_SHIM
+          value: ERROR
+        - name: CORE_CHAINCODE_EXECUTETIMEOUT
+          value: "999999"
+        - name: CORE_VM_ENDPOINT
+          value: unix:///host/var/run/docker.sock
+        - name: CORE_PEER_ID
+          value: peer3
+        - name: CORE_PEER_ENDORSER_ENABLED
+          value: "true"
+        - name: CORE_PEER_LOCALMSPID
+          value: Org2MSP
+        - name: CORE_PEER_MSPCONFIGPATH
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer3-org2-oslab-com/msp/
+        - name: CORE_PEER_ADDRESS
+          value: peer3:7051
+        - name: CORE_PEER_GOSSIP_USELEADERELECTION
+          value: "true"
+        - name: CORE_PEER_GOSSIP_ORGLEADER
+          value: "false"
+        - name: CORE_PEER_GOSSIP_EXTERNALENDPOINT
+          value: peer3:7051
+        - name: CORE_PEER_TLS_ENABLED
+          value: "true"
+        - name: CORE_PEER_TLS_CERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer3-org2-oslab-com/tls/server.crt
+        - name: CORE_PEER_TLS_KEY_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer3-org2-oslab-com/tls/server.key
+        - name: CORE_PEER_TLS_ROOTCERT_FILE
+          value: /shared/crypto-config/peerOrganizations/org2-oslab-com/peers/peer3-org2-oslab-com/tls/ca.crt
+        - name: CORE_LEDGER_STATE_STATEDATABASE
+          value: goleveldb
+        - name: GODEBUG
+          value: "netdns=go"
+        - name: CORE_PEER_ADDRESSAUTODETECT
+          value: "true"
+        - name: CORE_PEER_NETWORKID
+          value: nid1
+
+#        - name: CORE_PEER_LISTENADDRESS
+#          value: 0.0.0.0:7051
+#        - name: CORE_PEER_EVENTS_ADDRESS
+#          value: 0.0.0.0:7052
+#        - name: CORE_PEER_GOSSIP_BOOTSTRAP
+#          value: peer2:7051
+#        - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
+#          value: "true"
+#        - name: CORE_PEER_COMMITTER_ENABLED
+#          value: "true"
+#        - name: CORE_PEER_PROFILE_ENABLED
+#          value: "true"
+#        - name: FABRIC_LOGGING_SPEC
+#          value: debug
+#        - name: CORE_LOGGING_PEER
+#          value: debug
+#        - name: CORE_LOGGING_CAUTHDSL
+#          value: debug
+#        - name: CORE_LOGGING_GOSSIP
+#          value: debug
+#        - name: CORE_LOGGING_LEDGER
+#          value: debug
+#        - name: CORE_LOGGING_MSP
+#          value: debug
+#        - name: CORE_LOGGING_POLICIES
+#          value: debug
+#        - name: CORE_LOGGING_GRPC
+#          value: debug
+#        - name: CORE_VM_DOCKER_ATTACHSTDOUT
+#          value: "true"
+#        - name: CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE
+#          value: raft_peer
+#        - name: ORDERER_URL
+#          value: orderer0:7050
+#        - name: ORDERER_URL
+#          value: orderer1:7050
+#        - name: ORDERER_URL
+#          value: orderer2:7050
+#        - name: FABRIC_CFG_PATH
+#          value: /etc/hyperledger/fabric/
+
+        volumeMounts:
+        - mountPath: /shared
+          name: sharedvolume
+        - mountPath: /host/var/run/docker.sock
+          name: dockersocket

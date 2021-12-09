@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderer2-oslab-com
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: orderer2-oslab-com
+  template:
+    metadata:
+      labels:
+        name: orderer2-oslab-com
+    spec:
+      containers:
+        - args:
+            - orderer
+          env:
+            - name: FABRIC_LOGGING_SPEC
+              value: error:error
+            - name: ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE
+              value: /etc/hyperledger/msp/orderer/tls/server.crt
+            - name: ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY
+              value: /etc/hyperledger/msp/orderer/tls/server.key
+            - name: ORDERER_GENERAL_GENESISFILE
+              value: /etc/hyperledger/configtx/channel-artifacts/genesis.block
+            - name: ORDERER_GENERAL_GENESISMETHOD
+              value: file
+            - name: ORDERER_GENERAL_LISTENADDRESS
+              value: 0.0.0.0
+            - name: ORDERER_GENERAL_LOCALMSPDIR
+              value: /etc/hyperledger/msp/orderer/msp
+            - name: ORDERER_GENERAL_LOCALMSPID
+              value: OrdererMSP
+            - name: ORDERER_GENERAL_TLS_CERTIFICATE
+              value: /etc/hyperledger/msp/orderer/tls/server.crt
+            - name: ORDERER_GENERAL_TLS_ENABLED
+              value: "true"
+            - name: ORDERER_GENERAL_TLS_PRIVATEKEY
+              value: /etc/hyperledger/msp/orderer/tls/server.key
+            - name: ORDERER_GENERAL_TLS_ROOTCAS
+              value: '[/etc/hyperledger/msp/orderer/tls/ca.crt]'
+          image: hyperledger/fabric-orderer:1.4.4
+          name: orderer2-oslab-com
+          ports:
+            - containerPort: 7050
+          volumeMounts:
+            - mountPath: /etc/hyperledger/configtx
+              name: orderer2-oslab-com-claim0
+            - mountPath: /etc/hyperledger/msp/orderer
+              name: orderer2-oslab-com-claim1
+          workingDir: /opt/gopath/src/github.com/hyperledger/fabric
+      restartPolicy: Always
+      volumes:
+        - name: orderer2-oslab-com-claim0
+          persistentVolumeClaim:
+            claimName: orderer2-oslab-com-claim0
+        - name: orderer2-oslab-com-claim1
+          persistentVolumeClaim:
+            claimName: orderer2-oslab-com-claim1

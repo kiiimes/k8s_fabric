@@ -1,0 +1,177 @@
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+version: '2'
+
+networks:
+    orderer:
+        driver: bridge
+        ipam:
+            config:
+            - subnet: 172.51.0.0/24
+              gateway: 172.51.0.1
+
+services:
+    orderer0.oslab.com:
+        container_name: orderer0.oslab.com
+        image: hyperledger/fabric-orderer:amd64-latest
+        environment:
+        - FABRIC_LOGGING_SPEC=error:error
+        - ORDERER_GENERAL_LISTENPORT=6050
+        - PBFT_LISTEN_PORT=6070
+        - PBFT_NODE_ID=0
+        - PBFT_NODE_TABLE=http://172.51.0.2:6070;http://172.51.0.3:6071;http://172.51.0.4:6072;http://172.51.0.5:6073
+        - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+        - ORDERER_GENERAL_GENESISMETHOD=file
+        - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/genesis.block
+        - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+        - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/msp/orderer/msp
+        - ORDERER_GENERAL_TLS_ENABLED=true
+        - ORDERER_GENERAL_TLS_PRIVATEKEY=/etc/hyperledger/msp/orderer/tls/server.key
+        - ORDERER_GENERAL_TLS_CERTIFICATE=/etc/hyperledger/msp/orderer/tls/server.crt
+        - ORDERER_GENERAL_TLS_ROOTCAS=[/etc/hyperledger/msp/orderer/tls/ca.crt]
+        - ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/etc/hyperledger/msp/orderer/tls/server.crt
+        - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/etc/hyperledger/msp/orderer/tls/server.key
+        working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+        command: orderer
+        ports:
+        - 6050:6050
+        - 6070:6070
+        volumes:
+        - ../../config/pbft/channel-artifacts:/etc/hyperledger/configtx
+        - ../../config/pbft/crypto-config/ordererOrganizations/oslab.com/orderers/orderer0.oslab.com/:/etc/hyperledger/msp/orderer
+        extra_hosts:
+        - ca.org1.oslab.com:10.0.0.26
+        - orderer0.oslab.com:172.51.0.2
+        - orderer1.oslab.com:172.51.0.3
+        - orderer2.oslab.com:172.51.0.4
+        - orderer3.oslab.com:172.51.0.5
+        networks:
+          orderer:
+              ipv4_address: 172.51.0.2
+  
+    orderer1.oslab.com:
+        container_name: orderer1.oslab.com
+        image: hyperledger/fabric-orderer:amd64-latest
+        environment:
+        - FABRIC_LOGGING_SPEC=error:error
+        - ORDERER_GENERAL_LISTENPORT=6051
+        - PBFT_LISTEN_PORT=6071
+        - PBFT_NODE_ID=1
+        - PBFT_NODE_TABLE=http://172.51.0.2:6070;http://172.51.0.3:6071;http://172.51.0.4:6072;http://172.51.0.5:6073
+        - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+        - ORDERER_GENERAL_GENESISMETHOD=file
+        - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/genesis.block
+        - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+        - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/msp/orderer/msp
+        - ORDERER_GENERAL_TLS_ENABLED=true
+        - ORDERER_GENERAL_TLS_PRIVATEKEY=/etc/hyperledger/msp/orderer/tls/server.key
+        - ORDERER_GENERAL_TLS_CERTIFICATE=/etc/hyperledger/msp/orderer/tls/server.crt
+        - ORDERER_GENERAL_TLS_ROOTCAS=[/etc/hyperledger/msp/orderer/tls/ca.crt]
+        - ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/etc/hyperledger/msp/orderer/tls/server.crt
+        - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/etc/hyperledger/msp/orderer/tls/server.key
+        working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+        command: orderer
+        ports:
+        - 6051:6051
+        - 6071:6071
+        volumes:
+        - ../../config/pbft/channel-artifacts:/etc/hyperledger/configtx
+        - ../../config/pbft/crypto-config/ordererOrganizations/oslab.com/orderers/orderer1.oslab.com/:/etc/hyperledger/msp/orderer
+        extra_hosts:
+        - ca.org1.oslab.com:10.0.0.26
+        - orderer0.oslab.com:172.51.0.2
+        - orderer1.oslab.com:172.51.0.3
+        - orderer2.oslab.com:172.51.0.4
+        - orderer3.oslab.com:172.51.0.5
+        networks:
+          orderer:
+              ipv4_address: 172.51.0.3
+
+
+    orderer2.oslab.com:
+        container_name: orderer2.oslab.com
+        image: hyperledger/fabric-orderer:amd64-latest
+        environment:
+        - FABRIC_LOGGING_SPEC=error:error
+        - ORDERER_GENERAL_LISTENPORT=6052
+        - PBFT_LISTEN_PORT=6072
+        - PBFT_NODE_ID=2
+        - PBFT_NODE_TABLE=http://172.51.0.2:6070;http://172.51.0.3:6071;http://172.51.0.4:6072;http://172.51.0.5:6073
+        - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+        - ORDERER_GENERAL_GENESISMETHOD=file
+        - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/genesis.block
+        - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+        - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/msp/orderer/msp
+        - ORDERER_GENERAL_TLS_ENABLED=true
+        - ORDERER_GENERAL_TLS_PRIVATEKEY=/etc/hyperledger/msp/orderer/tls/server.key
+        - ORDERER_GENERAL_TLS_CERTIFICATE=/etc/hyperledger/msp/orderer/tls/server.crt
+        - ORDERER_GENERAL_TLS_ROOTCAS=[/etc/hyperledger/msp/orderer/tls/ca.crt]
+        - ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/etc/hyperledger/msp/orderer/tls/server.crt
+        - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/etc/hyperledger/msp/orderer/tls/server.key
+        working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+        command: orderer
+        ports:
+        - 6052:6052
+        - 6072:6072
+        volumes:
+        - ../../config/pbft/channel-artifacts:/etc/hyperledger/configtx
+        - ../../config/pbft/crypto-config/ordererOrganizations/oslab.com/orderers/orderer2.oslab.com/:/etc/hyperledger/msp/orderer
+        extra_hosts:
+        - ca.org1.oslab.com:10.0.0.26
+        - orderer0.oslab.com:172.51.0.2
+        - orderer1.oslab.com:172.51.0.3
+        - orderer2.oslab.com:172.51.0.4
+        - orderer3.oslab.com:172.51.0.5
+        networks:
+          orderer:
+              ipv4_address: 172.51.0.4
+
+    orderer3.oslab.com:
+        container_name: orderer3.oslab.com
+        image: hyperledger/fabric-orderer:amd64-latest
+        environment:
+        - FABRIC_LOGGING_SPEC=error:error
+        - ORDERER_GENERAL_LISTENPORT=6053
+        - PBFT_LISTEN_PORT=6073
+        - PBFT_NODE_ID=3
+        - PBFT_NODE_TABLE=http://172.51.0.2:6070;http://172.51.0.3:6071;http://172.51.0.4:6072;http://172.51.0.5:6073
+        - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+        - ORDERER_GENERAL_GENESISMETHOD=file
+        - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/genesis.block
+        - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+        - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/msp/orderer/msp
+        - ORDERER_GENERAL_TLS_ENABLED=true
+        - ORDERER_GENERAL_TLS_PRIVATEKEY=/etc/hyperledger/msp/orderer/tls/server.key
+        - ORDERER_GENERAL_TLS_CERTIFICATE=/etc/hyperledger/msp/orderer/tls/server.crt
+        - ORDERER_GENERAL_TLS_ROOTCAS=[/etc/hyperledger/msp/orderer/tls/ca.crt]
+        - ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=/etc/hyperledger/msp/orderer/tls/server.crt
+        - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=/etc/hyperledger/msp/orderer/tls/server.key
+        working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+        command: orderer
+        ports:
+        - 6053:6053
+        - 6073:6073
+        volumes:
+        - ../../config/pbft/channel-artifacts:/etc/hyperledger/configtx
+        - ../../config/pbft/crypto-config/ordererOrganizations/oslab.com/orderers/orderer3.oslab.com/:/etc/hyperledger/msp/orderer
+        extra_hosts:
+        - ca.org1.oslab.com:10.0.0.26
+        - orderer0.oslab.com:172.51.0.2
+        - orderer1.oslab.com:172.51.0.3
+        - orderer2.oslab.com:172.51.0.4
+        - orderer3.oslab.com:172.51.0.5
+        networks:
+          orderer:
+              ipv4_address: 172.51.0.5
