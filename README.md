@@ -94,7 +94,7 @@
 	* 이메일 : dkdla58@gmail.com
 
 ### 레퍼런스
-	* IBM cloud Kubernetes services https://github.com/IBM/blockchain-network-on-kubernetes
-	* Qioi: [Applied Sciences | Free Full-Text | QiOi: Performance Isolation for Hyperledger Fabric](https://www.mdpi.com/2076-3417/11/9/3870)
-	* 멀티 테넌트 환경에서 이종 워크로드 간 성능 간섭 분석 https://www.cseric.or.kr/literature/ser_view.php?searchCate=literature&SnxGubun=INME&mode=total&SnxGubun=INME&gu=INME000G2&cmd=qryview&SnxIndxNum=220743&rownum=1&f1=MN&q1=%C0%CC%B0%FC%C8%C6
-	* 블록체인 플랫폼 성능 벤치마크 분석: 하이퍼레저 캘리퍼 [논문보기 - DBpia](https://www.dbpia.co.kr/pdf/pdfView.do?nodeId=NODE09874646&mark=0&useDate=&ipRange=N&accessgl=Y&language=ko_KR)
+* IBM cloud Kubernetes services https://github.com/IBM/blockchain-network-on-kubernetes
+* Qioi: [Applied Sciences | Free Full-Text | QiOi: Performance Isolation for Hyperledger Fabric](https://www.mdpi.com/2076-3417/11/9/3870)
+* 멀티 테넌트 환경에서 이종 워크로드 간 성능 간섭 분석 https://www.cseric.or.kr/literature/ser_view.php?searchCate=literature&SnxGubun=INME&mode=total&SnxGubun=INME&gu=INME000G2&cmd=qryview&SnxIndxNum=220743&rownum=1&f1=MN&q1=%C0%CC%B0%FC%C8%C6
+* 블록체인 플랫폼 성능 벤치마크 분석: 하이퍼레저 캘리퍼 [논문보기 - DBpia](https://www.dbpia.co.kr/pdf/pdfView.do?nodeId=NODE09874646&mark=0&useDate=&ipRange=N&accessgl=Y&language=ko_KR)
